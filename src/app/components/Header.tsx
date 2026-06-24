@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Gamepad2, HelpCircle, MessageSquare } from 'lucide-react';
+import { Menu, X, Gamepad2, HelpCircle, MessageSquare, Timer, ClipboardList } from 'lucide-react';
 import { Link, useLocation } from 'react-router';
 
 export function Header() {
@@ -15,7 +15,9 @@ export function Header() {
     { label: 'Materi', href: homeHref('#materi'), isRoute: false },
     { label: 'Tips', href: homeHref('#tips'), isRoute: false },
     { label: 'Games', href: '/games', isRoute: true, icon: Gamepad2 },
+    { label: 'Timer', href: '/tools/timer', isRoute: true, icon: Timer },
     { label: 'Quiz', href: '/quiz', isRoute: true, icon: HelpCircle },
+    { label: 'Evaluasi', href: '/evaluasi', isRoute: true, icon: ClipboardList },
     { label: 'Komentar', href: '/komentar', isRoute: true, icon: MessageSquare },
   ];
 

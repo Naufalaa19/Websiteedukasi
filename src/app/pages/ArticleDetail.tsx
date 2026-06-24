@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router';
-import { ArrowLeft, Clock, User, Calendar, BookOpen, Star, Share2, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Clock, Calendar, BookOpen, Star, Share2, ChevronRight, PlayCircle } from 'lucide-react';
 import { articles } from '../data/articles';
 import type { ArticleSection } from '../data/articles';
 import { Header } from '../components/Header';
@@ -52,6 +52,60 @@ function SectionBlock({ section }: { section: ArticleSection }) {
             <span className="text-teal-500 text-lg flex-shrink-0">💡</span>
             <p className="text-teal-800 text-sm leading-relaxed">{section.text}</p>
           </div>
+        </div>
+      );
+    case 'video':
+      return (
+        <div className="my-6 rounded-2xl overflow-hidden border border-gray-100 shadow-md bg-white">
+          {section.videoId ? (
+            <div className="relative aspect-video bg-gray-900">
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={`https://www.youtube-nocookie.com/embed/${section.videoId}`}
+                title={section.videoTitle || 'Video edukasi kesehatan gigi'}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          ) : (
+            <div className="relative bg-gradient-to-br from-red-500 via-rose-500 to-red-700 h-44 flex flex-col items-center justify-center gap-3 px-6 text-center">
+              <PlayCircle size={52} className="text-white drop-shadow-lg" />
+              <p className="text-white font-semibold text-base leading-snug drop-shadow max-w-sm">{section.videoTitle}</p>
+            </div>
+          )}
+          <div className="p-4 bg-gray-50">
+            <p className="text-gray-800 font-semibold text-sm mb-1">{section.videoTitle}</p>
+            <p className="text-gray-500 text-sm">{section.videoDesc}</p>
+          </div>
+        </div>
+      );
+    case 'table':
+      return (
+        <div className="my-5 overflow-hidden rounded-2xl border border-gray-100">
+          {section.rows?.map((row, i) => (
+            <div key={row.label} className={`grid sm:grid-cols-[180px_1fr] gap-2 p-4 text-sm ${i % 2 === 0 ? 'bg-teal-50/50' : 'bg-white'}`}>
+              <div className="font-semibold text-teal-800">{row.label}</div>
+              <div className="text-gray-600 leading-relaxed">{row.value}</div>
+            </div>
+          ))}
+        </div>
+      );
+    case 'sources':
+      return (
+        <div className="mt-8 pt-6 border-t-2 border-dashed border-gray-200">
+          <div className="flex items-center gap-2 mb-3">
+            <BookOpen size={16} className="text-gray-500" />
+            <h3 className="text-gray-700 text-sm" style={{ fontWeight: 700 }}>Referensi & Sumber Ilmiah</h3>
+          </div>
+          <ol className="space-y-2">
+            {section.items?.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-xs text-gray-500 leading-relaxed">
+                <span className="bg-teal-100 text-teal-700 rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5 text-xs font-semibold">{i + 1}</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       );
     default:
@@ -136,12 +190,6 @@ export default function ArticleDetail() {
             {/* Meta info */}
             <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-6 pb-6 border-b border-gray-100">
               <div className="flex items-center gap-1.5">
-                <User size={14} className="text-teal-500" />
-                <span>{article.author}</span>
-                <span className="text-gray-400">·</span>
-                <span className="text-gray-400 text-xs">{article.authorTitle}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
                 <Clock size={14} className="text-teal-500" />
                 <span>{article.readTime} baca</span>
               </div>
@@ -186,22 +234,6 @@ export default function ArticleDetail() {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Author card */}
-            <div className="bg-gray-50 rounded-2xl p-5 mb-6 border border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-full bg-teal-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                  {article.author.split(' ').slice(-1)[0][0]}
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-800 text-sm">{article.author}</p>
-                  <p className="text-gray-500 text-xs">{article.authorTitle}</p>
-                </div>
-              </div>
-              <p className="text-gray-500 text-xs leading-relaxed">
-                Penulis merupakan tenaga kesehatan gigi berpengalaman yang berdedikasi dalam meningkatkan kesadaran kesehatan mulut masyarakat Indonesia.
-              </p>
-            </div>
-
             {/* Related articles */}
             <div>
               <h3 className="text-gray-800 mb-4" style={{ fontSize: '0.95rem', fontWeight: 600 }}>

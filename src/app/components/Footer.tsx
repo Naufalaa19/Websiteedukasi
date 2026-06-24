@@ -107,15 +107,15 @@ export function Footer() {
             <div className="space-y-4 mb-6">
               <div className="flex items-start gap-3">
                 <MapPin size={16} className="text-teal-500 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-400 text-sm">Jl. Kesehatan No. 17, Indonesia</span>
+                <span className="text-gray-400 text-sm">Komplek Manglayang Regency</span>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={16} className="text-teal-500 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">+62 812-3456-7890</span>
+                <span className="text-gray-400 text-sm">085721574807</span>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={16} className="text-teal-500 flex-shrink-0" />
-                <span className="text-gray-400 text-sm">info@kesgigimulut.id</span>
+                <span className="text-gray-400 text-sm">naufal06102003@gmail.com</span>
               </div>
             </div>
 
@@ -141,7 +141,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-gray-500 text-sm text-center">
-            © 2025 Kesehatan Gigi & Mulut. Semua hak dilindungi.
+            © 2025 KarangGigiEdu. Semua hak dilindungi.
           </p>
           <p className="text-gray-600 text-xs text-center">
             Informasi di website ini bersifat edukatif dan bukan pengganti konsultasi dokter gigi.

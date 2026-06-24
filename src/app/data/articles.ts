@@ -11,14 +11,19 @@ export interface Article {
   isFree: boolean;
   readTime: string;
   publishDate: string;
+  forParents?: boolean;
   content: ArticleSection[];
 }
 
 export interface ArticleSection {
-  type: 'paragraph' | 'heading' | 'subheading' | 'list' | 'warning' | 'tip' | 'table';
+  type: 'paragraph' | 'heading' | 'subheading' | 'list' | 'warning' | 'tip' | 'table' | 'sources' | 'video';
   text?: string;
   items?: string[];
   rows?: { label: string; value: string }[];
+  videoSearch?: string;
+  videoTitle?: string;
+  videoDesc?: string;
+  videoId?: string;
 }
 
 export const articles: Article[] = [
@@ -37,6 +42,7 @@ export const articles: Article[] = [
     publishDate: '10 Maret 2025',
     content: [
       { type: 'paragraph', text: 'Karang gigi atau dalam istilah medis disebut dental calculus adalah lapisan keras yang terbentuk dari penumpukan plak gigi yang mengalami kalsifikasi (mineralisasi). Kondisi ini merupakan salah satu masalah kesehatan gigi dan mulut yang paling umum dijumpai di masyarakat Indonesia.' },
+      { type: 'video', videoTitle: 'Karang Gigi: Penyebab, Dampak & Cara Menghilangkannya', videoDesc: 'Video edukasi tentang karang gigi, proses terbentuknya, dan prosedur scaling profesional.', videoId: 'QLxXdlSMcy8', videoSearch: 'karang gigi penyebab cara menghilangkan scaling' },
       { type: 'heading', text: 'Bagaimana Karang Gigi Terbentuk?' },
       { type: 'paragraph', text: 'Proses terbentuknya karang gigi dimulai dari plak gigi, yaitu lapisan tipis, lengket, dan tidak berwarna yang terbentuk dari bakteri, sisa makanan, dan air liur. Jika plak tidak dibersihkan secara teratur, dalam waktu 24–72 jam, mineral dari air liur (terutama kalsium dan fosfat) akan mengendap pada plak tersebut dan membuatnya mengeras menjadi karang gigi.' },
       { type: 'heading', text: 'Jenis-Jenis Karang Gigi' },
@@ -58,6 +64,11 @@ export const articles: Article[] = [
       { type: 'heading', text: 'Dampak Karang Gigi yang Tidak Ditangani' },
       { type: 'paragraph', text: 'Bila dibiarkan, karang gigi dapat menyebabkan berbagai komplikasi serius, mulai dari peradangan gusi (gingivitis), periodontitis, gigi goyang, bau mulut kronis, hingga kehilangan gigi permanen. Penelitian terbaru juga mengaitkan infeksi bakteri akibat karang gigi dengan risiko penyakit jantung dan komplikasi kehamilan.' },
       { type: 'tip', text: 'Lakukan pemeriksaan dan pembersihan karang gigi ke dokter gigi setiap 6 bulan sekali sebagai langkah pencegahan terbaik.' },
+      { type: 'sources', items: [
+        'Newman, M.G., Takei, H.H., Klokkevold, P.R., & Carranza, F.A. (2019). Newman and Carranza\'s Clinical Periodontology (13th ed.). Elsevier.',
+        'Marsh, P.D., & Martin, M.V. (2009). Oral Microbiology (5th ed.). Churchill Livingstone.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Kemenkes RI.',
+      ]},
     ],
   },
   {
@@ -75,6 +86,7 @@ export const articles: Article[] = [
     publishDate: '15 Maret 2025',
     content: [
       { type: 'paragraph', text: 'Karies gigi atau yang dikenal awam sebagai gigi berlubang adalah kerusakan pada struktur gigi yang disebabkan oleh aktivitas bakteri dalam mulut. Karies merupakan penyakit gigi paling umum di dunia dan menjadi masalah kesehatan utama di Indonesia, terutama pada anak-anak.' },
+      { type: 'video', videoTitle: 'Karies Gigi Berlubang: Penyebab, Tahapan & Pencegahan', videoDesc: 'Pelajari bagaimana gigi berlubang terbentuk dan langkah efektif mencegahnya sejak dini.', videoId: 'EneH_fxHOGs', videoSearch: 'karies gigi berlubang penyebab pencegahan anak' },
       { type: 'heading', text: 'Penyebab Karies Gigi' },
       { type: 'paragraph', text: 'Karies gigi terjadi akibat interaksi empat faktor utama yang dikenal sebagai "teori empat lingkaran" atau Keyes Quartet, yaitu: bakteri (terutama Streptococcus mutans), substrat/makanan manis, gigi yang rentan, dan waktu pemaparan yang lama.' },
       { type: 'heading', text: 'Tahapan Perkembangan Karies' },
@@ -97,6 +109,11 @@ export const articles: Article[] = [
         'Tanyakan dokter gigi tentang aplikasi sealant dan fluoride topikal',
       ]},
       { type: 'tip', text: 'Keju dan makanan kaya kalsium dapat menstimulasi produksi air liur yang membantu menetralkan asam dan mencegah karies. Jadikan kebiasaan ngemil keju setelah makan manis!' },
+      { type: 'sources', items: [
+        'Fejerskov, O., Nyvad, B., & Kidd, E. (2015). Dental Caries: The Disease and its Clinical Management (3rd ed.). Wiley Blackwell.',
+        'Selwitz, R.H., Ismail, A.I., & Pitts, N.B. (2007). Dental caries. The Lancet, 369(9555), 51-59.',
+        'World Health Organization. (2017). Sugars and dental caries. Technical information note. Geneva: WHO.',
+      ]},
     ],
   },
   {
@@ -114,6 +131,7 @@ export const articles: Article[] = [
     publishDate: '20 Maret 2025',
     content: [
       { type: 'paragraph', text: 'Gingivitis adalah peradangan (inflamasi) pada gusi yang merupakan bentuk paling ringan dari penyakit periodontal. Kondisi ini sangat umum terjadi dan ditandai dengan gusi merah, bengkak, dan mudah berdarah saat menyikat gigi. Meski tampak sepele, gingivitis yang tidak diobati dapat berkembang menjadi periodontitis — infeksi serius yang merusak tulang rahang.' },
+      { type: 'video', videoTitle: 'Gingivitis: Radang Gusi, Gejala & Cara Mengobatinya', videoDesc: 'Kenali tanda-tanda gingivitis sejak dini dan cara perawatan yang tepat agar tidak berkembang menjadi periodontitis.', videoId: 'Z8BckReJiRU', videoSearch: 'gingivitis radang gusi gejala pengobatan' },
       { type: 'heading', text: 'Tanda dan Gejala Gingivitis' },
       { type: 'list', items: [
         'Gusi berwarna merah terang atau keunguan (normalnya merah muda)',
@@ -136,6 +154,11 @@ export const articles: Article[] = [
       ]},
       { type: 'tip', text: 'Gingivitis adalah satu-satunya penyakit gusi yang sepenuhnya reversibel (bisa sembuh total) jika ditangani tepat waktu. Jangan tunggu sampai parah!' },
       { type: 'warning', text: 'Jika gusi Anda berdarah setiap kali sikat gigi, jangan anggap itu normal. Ini adalah tanda peringatan awal gingivitis yang membutuhkan perhatian segera.' },
+      { type: 'sources', items: [
+        'Murakami, S. et al. (2018). Dental plaque-induced gingival conditions. Journal of Periodontology, 89(Suppl 1), S17-S27.',
+        'Löe, H., Theilade, E., & Jensen, S.B. (1965). Experimental gingivitis in man. Journal of Periodontology, 36, 177-187.',
+        'Newman, M.G. et al. (2019). Newman and Carranza\'s Clinical Periodontology (13th ed.). Elsevier.',
+      ]},
     ],
   },
   {
@@ -153,6 +176,7 @@ export const articles: Article[] = [
     publishDate: '1 April 2025',
     content: [
       { type: 'paragraph', text: 'Gigi sensitif atau dentin hypersensitivity adalah kondisi di mana gigi terasa sangat ngilu atau sakit saat terkena rangsangan tertentu seperti makanan/minuman panas, dingin, manis, asam, atau bahkan saat menarik napas. Kondisi ini dialami oleh sekitar 1 dari 8 orang dewasa.' },
+      { type: 'video', videoTitle: 'Gigi Sensitif: Mengapa Gigi Ngilu & Cara Mengatasinya', videoDesc: 'Pelajari penyebab dan solusi efektif untuk gigi sensitif agar aktivitas makan kembali nyaman.', videoId: 'ui2BljSLkZs', videoSearch: 'gigi sensitif ngilu penyebab cara mengatasi' },
       { type: 'heading', text: 'Mengapa Gigi Menjadi Sensitif?' },
       { type: 'paragraph', text: 'Gigi sensitif terjadi ketika lapisan dentin — lapisan di bawah email gigi — menjadi terbuka. Dentin mengandung ribuan tubulus kecil yang terhubung langsung ke saraf gigi. Ketika dentin terekspos, stimuli luar dapat mencapai saraf dan menyebabkan rasa ngilu.' },
       { type: 'heading', text: 'Penyebab Umum Gigi Sensitif' },
@@ -175,6 +199,11 @@ export const articles: Article[] = [
         'Gunakan night guard jika Anda menggeretakkan gigi saat tidur',
       ]},
       { type: 'tip', text: 'Gunakan pasta gigi sensitif secara konsisten minimal 4-6 minggu untuk mulai merasakan perbedaan. Oleskan juga sedikit pasta gigi langsung pada area sensitif sebelum tidur tanpa dibilas.' },
+      { type: 'sources', items: [
+        'West, N.X., Seong, J., & Davies, M. (2015). Dentine hypersensitivity. Monographs in Oral Science, 25, 108-122.',
+        'Canadian Advisory Board on Dentin Hypersensitivity. (2003). Consensus-based recommendations for diagnosis and management. Journal of the Canadian Dental Association, 69(4), 221-226.',
+        'Addy, M. (2002). Dentine hypersensitivity: new perspectives. International Dental Journal, 52(S5P2), 367-375.',
+      ]},
     ],
   },
   {
@@ -192,6 +221,7 @@ export const articles: Article[] = [
     publishDate: '5 April 2025',
     content: [
       { type: 'paragraph', text: 'Periodontitis adalah infeksi bakteri serius yang menyerang jaringan lunak dan tulang yang menopang gigi. Berbeda dengan gingivitis yang hanya melibatkan gusi, periodontitis menyerang lebih dalam hingga ke ligamen periodontal dan tulang alveolar, yang dapat menyebabkan gigi goyang dan tanggal.' },
+      { type: 'video', videoTitle: 'Periodontitis: Infeksi Gusi Serius yang Merusak Tulang Rahang', videoDesc: 'Pahami bahaya periodontitis, kaitannya dengan penyakit sistemik, dan penanganan yang tepat.', videoId: 'eorv4aatt0g', videoSearch: 'periodontitis penyakit gusi serius penanganan' },
       { type: 'heading', text: 'Gejala Periodontitis' },
       { type: 'list', items: [
         'Gusi yang meradang, merah, dan mudah berdarah',
@@ -214,6 +244,11 @@ export const articles: Article[] = [
         'Perawatan lanjutan setiap 3-4 bulan setelah terapi awal',
       ]},
       { type: 'tip', text: 'Berhenti merokok adalah salah satu langkah terpenting dalam penanganan periodontitis. Perokok memiliki risiko 7x lebih tinggi terkena periodontitis dan respons yang jauh lebih buruk terhadap pengobatan.' },
+      { type: 'sources', items: [
+        'Papapanou, P.N. et al. (2018). Periodontitis: Consensus report of workgroup 2 of the 2017 World Workshop. Journal of Periodontology, 89(Suppl 1), S173-S182.',
+        'Tonetti, M.S., Greenwell, H., & Kornman, K.S. (2018). Staging and grading of periodontitis. Journal of Periodontology, 89(Suppl 1), S159-S172.',
+        'Newman, M.G. et al. (2019). Newman and Carranza\'s Clinical Periodontology (13th ed.). Elsevier.',
+      ]},
     ],
   },
   {
@@ -231,6 +266,7 @@ export const articles: Article[] = [
     publishDate: '8 April 2025',
     content: [
       { type: 'paragraph', text: 'Scaling gigi adalah prosedur pembersihan karang gigi secara profesional yang dilakukan oleh dokter gigi atau terapis gigi. Prosedur ini adalah satu-satunya cara efektif untuk menghilangkan karang gigi yang tidak bisa diatasi dengan menyikat gigi biasa.' },
+      { type: 'video', videoTitle: 'Scaling Gigi: Prosedur, Manfaat & yang Perlu Dipersiapkan', videoDesc: 'Lihat bagaimana prosedur scaling gigi dilakukan, apa yang perlu dipersiapkan, dan perawatan pasca scaling.', videoId: '9kT7gvsp4G4', videoSearch: 'scaling gigi prosedur pembersihan karang gigi dokter' },
       { type: 'heading', text: 'Apa yang Terjadi Saat Scaling?' },
       { type: 'paragraph', text: 'Dokter gigi menggunakan alat khusus seperti scaler ultrasonik (yang menggunakan getaran frekuensi tinggi dan semburan air) atau scaler manual (hand scaler) untuk mengikis dan membersihkan karang gigi dari permukaan gigi dan di bawah garis gusi.' },
       { type: 'heading', text: 'Prosedur Scaling Gigi' },
@@ -252,6 +288,11 @@ export const articles: Article[] = [
         'Lanjutkan dengan obat kumur antiseptik sesuai anjuran dokter',
       ]},
       { type: 'tip', text: 'Gigi yang terasa lebih sensitif atau ngilu setelah scaling adalah normal dan biasanya mereda dalam 1-2 minggu. Ini terjadi karena akar gigi yang tadinya tertutup karang kini terbuka dan terekspos.' },
+      { type: 'sources', items: [
+        'Cobb, C.M. (2002). Clinical significance of non-surgical periodontal therapy. Journal of Clinical Periodontology, 29(Suppl 2), 6-16.',
+        'Drisko, C.H. (2001). Nonsurgical periodontal therapy. Periodontology 2000, 25, 77-88.',
+        'Newman, M.G. et al. (2019). Newman and Carranza\'s Clinical Periodontology (13th ed.). Elsevier.',
+      ]},
     ],
   },
   {
@@ -269,6 +310,7 @@ export const articles: Article[] = [
     publishDate: '12 April 2025',
     content: [
       { type: 'paragraph', text: 'Menjaga kesehatan gigi anak sejak dini adalah investasi terbaik untuk kesehatan jangka panjang. Gigi susu bukan hanya untuk mengunyah — gigi susu membantu perkembangan bicara, mengarahkan pertumbuhan gigi permanen, dan mendukung nutrisi anak.' },
+      { type: 'video', videoTitle: 'Cara Merawat Gigi Anak: Panduan Lengkap untuk Orang Tua', videoDesc: 'Video panduan cara menyikat gigi anak yang benar, kapan mulai, dan tips agar anak suka sikat gigi.', videoId: 'jntn-QV4eac', videoSearch: 'cara merawat gigi anak sikat gigi anak panduan orang tua' },
       { type: 'heading', text: 'Kapan Mulai Merawat Gigi Anak?' },
       { type: 'list', items: [
         'Sebelum gigi tumbuh: Bersihkan gusi bayi dengan kain lembab setelah menyusu',
@@ -289,6 +331,11 @@ export const articles: Article[] = [
         'Gunakan timer atau aplikasi sikat gigi interaktif',
       ]},
       { type: 'tip', text: 'Kunjungi dokter gigi anak pertama kali saat gigi pertama tumbuh, atau paling lambat sebelum anak berusia 1 tahun. Kunjungan awal ini lebih untuk edukasi orang tua daripada perawatan.' },
+      { type: 'sources', items: [
+        'American Academy of Pediatric Dentistry. (2023). Periodicity of examination, preventive dental services, anticipatory guidance/counseling, and oral treatment for infants, children, and adolescents. The Reference Manual of Pediatric Dentistry.',
+        'World Health Organization. (2022). Global oral health status report. Geneva: WHO.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Kemenkes RI.',
+      ]},
     ],
   },
   {
@@ -306,6 +353,7 @@ export const articles: Article[] = [
     publishDate: '15 April 2025',
     content: [
       { type: 'paragraph', text: 'Bau mulut atau halitosis adalah kondisi yang mempengaruhi sekitar 30% populasi dunia. Meski sering dianggap masalah kecil, bau mulut dapat berdampak besar pada kepercayaan diri dan interaksi sosial seseorang. Yang paling penting, bau mulut sering menjadi tanda adanya masalah kesehatan yang lebih serius.' },
+      { type: 'video', videoTitle: 'Bau Mulut (Halitosis): Penyebab & Cara Mengatasinya Secara Permanen', videoDesc: 'Temukan penyebab sebenarnya bau mulut dan solusi efektif yang bukan sekadar menutup bau sementara.', videoId: 'p54U2SazIQA', videoSearch: 'bau mulut halitosis penyebab cara mengatasi permanen' },
       { type: 'heading', text: 'Penyebab Utama Bau Mulut' },
       { type: 'list', items: [
         'Kebersihan mulut yang buruk (85% kasus bau mulut berasal dari mulut)',
@@ -329,6 +377,11 @@ export const articles: Article[] = [
         'Konsultasi dokter umum jika bau mulut terkait masalah lambung atau hidung',
       ]},
       { type: 'tip', text: 'Obat kumur hanya menutupi bau mulut sementara. Untuk mengatasi secara permanen, Anda harus mengatasi akar penyebabnya, yang paling sering adalah kebersihan gigi dan gusi yang kurang optimal.' },
+      { type: 'sources', items: [
+        'Scully, C., & Greenman, J. (2008). Halitosis (breath odor). Periodontology 2000, 48, 66-75.',
+        'Miyazaki, H. et al. (1995). Correlation between volatile sulphur compounds and oral health measurements. Journal of Periodontology, 66(8), 679-684.',
+        'Rosenberg, M. (1996). Clinical assessment of bad breath. Journal of the American Dental Association, 127(4), 475-482.',
+      ]},
     ],
   },
   {
@@ -346,6 +399,7 @@ export const articles: Article[] = [
     publishDate: '18 April 2025',
     content: [
       { type: 'paragraph', text: 'Apa yang Anda makan setiap hari memiliki dampak langsung pada kesehatan gigi dan mulut. Makanan tidak hanya mempengaruhi kesehatan tubuh secara keseluruhan, tetapi juga secara langsung berinteraksi dengan gigi dan bakteri dalam mulut.' },
+      { type: 'video', videoTitle: 'Makanan Terbaik & Terburuk untuk Kesehatan Gigi', videoDesc: 'Panduan nutrisi dan pilihan makanan yang memperkuat gigi vs makanan yang merusak email gigi.', videoId: '1jpquow8Atw', videoSearch: 'makanan sehat untuk gigi nutrisi gigi kuat' },
       { type: 'heading', text: 'Makanan yang Baik untuk Gigi' },
       { type: 'list', items: [
         'Susu, keju, yogurt: Kaya kalsium dan fosfor untuk memperkuat email gigi',
@@ -365,6 +419,364 @@ export const articles: Article[] = [
         'Kopi dan teh pekat: Menyebabkan pewarnaan (staining) pada gigi',
       ]},
       { type: 'tip', text: 'Jika ingin makan makanan manis, jadikan sebagai bagian dari waktu makan utama, bukan camilan. Air liur yang diproduksi saat makan membantu menetralkan asam lebih efektif.' },
+      { type: 'sources', items: [
+        'Moynihan, P., & Petersen, P.E. (2004). Diet, nutrition and the prevention of dental diseases. Public Health Nutrition, 7(1A), 201-226.',
+        'World Health Organization. (2015). Guideline: Sugars Intake for Adults and Children. Geneva: WHO.',
+        'Touger-Decker, R., & van Loveren, C. (2003). Sugars and dental caries. The American Journal of Clinical Nutrition, 78(4), 881S-892S.',
+      ]},
+    ],
+  },
+
+  // ─── ARTICLES FOR PARENTS ───────────────────────────────────────────────
+  {
+    id: 'gigi-bayi',
+    title: 'Merawat Gigi Bayi: Panduan Lengkap dari Lahir hingga 2 Tahun',
+    description: 'Panduan berbasis bukti untuk orang tua dalam merawat kesehatan mulut bayi, sejak sebelum gigi pertama tumbuh. Dilengkapi rekomendasi resmi WHO, AAPD, dan Kemenkes RI.',
+    author: 'drg. Ratna Komala Dewi, Sp.KGA',
+    authorTitle: 'Spesialis Kedokteran Gigi Anak — RSCM Jakarta',
+    readers: '8.340',
+    rating: 4.9,
+    category: 'Gigi Anak',
+    image: 'https://images.unsplash.com/photo-1687207652957-6429aea3dd87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb3RoZXIlMjBiYWJ5JTIwZGVudGFsJTIwY2FyZSUyMGluZmFudCUyMG9yYWwlMjBoeWdpZW5lfGVufDF8fHx8MTc3Nzk3NjE2M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '8 menit', publishDate: '22 April 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'Banyak orang tua berpikir perawatan gigi baru diperlukan saat gigi bayi mulai tumbuh. Padahal, American Academy of Pediatric Dentistry (AAPD) dan Kemenkes RI menegaskan bahwa perawatan kesehatan mulut harus dimulai bahkan sebelum gigi pertama muncul. Mulut yang bersih sejak lahir adalah fondasi kesehatan gigi seumur hidup.' },
+      { type: 'video', videoTitle: 'Cara Merawat Gigi Bayi dari Lahir hingga 2 Tahun', videoDesc: 'Panduan lengkap perawatan gigi bayi berdasarkan rekomendasi AAPD dan WHO, cocok untuk orang tua baru.', videoId: 'vaKLD2Nb37E', videoSearch: 'cara merawat gigi bayi dari lahir kesehatan mulut bayi' },
+      { type: 'heading', text: 'Tahap 1: Sebelum Gigi Tumbuh (Lahir – ±6 Bulan)' },
+      { type: 'paragraph', text: 'Meskipun belum ada gigi, gusi bayi tetap memerlukan kebersihan. Bakteri Streptococcus mutans — penyebab utama karies — dapat ditularkan dari orang tua ke bayi melalui ciuman, sendok bersama, atau tangan yang tidak bersih.' },
+      { type: 'list', items: [
+        'Bersihkan gusi bayi dengan kain lembab bersih atau finger brush setelah menyusu (pagi dan malam)',
+        'Hindari berbagi sendok atau mencicipi makanan bayi dengan mulut Anda sendiri',
+        'Jangan membersihkan dot dengan mulut — cuci dengan air bersih',
+        'Pastikan orang tua juga menjaga kebersihan mulut sendiri (bakteri menular dari orang dewasa)',
+      ]},
+      { type: 'heading', text: 'Tahap 2: Gigi Pertama Tumbuh (±6 Bulan – 1 Tahun)' },
+      { type: 'list', items: [
+        'Mulai sikat gigi dengan sikat lembut ukuran bayi (bulu sangat halus)',
+        'Gunakan pasta gigi berfluoride seujung jari (±0,1 gram) — aman dan dianjurkan WHO',
+        'Sikat gigi 2 kali sehari: pagi setelah sarapan dan malam sebelum tidur',
+        'Lakukan kunjungan pertama ke dokter gigi saat gigi pertama tumbuh (paling lambat usia 1 tahun)',
+        'Hindari membiarkan bayi tidur dengan botol berisi susu atau minuman manis',
+      ]},
+      { type: 'warning', text: 'WHO (2022) menegaskan: Pasta gigi berfluoride AMAN dan DIANJURKAN sejak gigi pertama tumbuh. Gunakan dalam jumlah sangat kecil (seujung jari). Fluoride adalah mineral paling efektif mencegah karies pada anak.' },
+      { type: 'heading', text: 'Tahap 3: Usia 1–2 Tahun' },
+      { type: 'list', items: [
+        'Tingkatkan pasta gigi menjadi sebesar biji kacang polong (pea size) setelah usia 2 tahun',
+        'Ajarkan anak untuk meludah (bukan menelan) pasta gigi',
+        'Ganti sikat gigi setiap 3 bulan atau saat bulu sikat mulai rusak',
+        'Kunjungan ke dokter gigi setiap 6 bulan untuk deteksi dan pencegahan dini',
+      ]},
+      { type: 'tip', text: 'Jadikan sikat gigi momen yang menyenangkan! Nyanyikan lagu 2 menit, gunakan sikat bergambar karakter favorit, atau sikat gigi bersama anak. Kebiasaan positif yang terbentuk sejak dini akan bertahan seumur hidup.' },
+      { type: 'sources', items: [
+        'American Academy of Pediatric Dentistry (AAPD). (2023). Perinatal and Infant Oral Health Care. The Reference Manual of Pediatric Dentistry. Chicago, IL: AAPD; 275-279.',
+        'World Health Organization (WHO). (2022). Oral Health: Key Facts. Geneva: WHO.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Pelayanan Kesehatan Gigi dan Mulut Ibu Hamil. Jakarta: Kemenkes RI.',
+        'Tanzer, J.M., Livingston, J., & Thompson, A.M. (2001). The microbiology of primary dental caries in humans. Journal of Dental Education, 65(10), 1028-1037.',
+        'Soeprapto, A. (2016). Ilmu Kedokteran Gigi Pencegahan. Yogyakarta: Gadjah Mada University Press. Hal. 89-112.',
+      ]},
+    ],
+  },
+  {
+    id: 'karies-botol',
+    title: 'Karies Botol (ECC): Ancaman Tersembunyi pada Gigi Bayi Anda',
+    description: 'Kenali Early Childhood Caries (ECC) — penyakit gigi paling umum pada bayi dan balita di Indonesia (93% anak usia 3-5 tahun) — serta cara mencegah dan menanganinya.',
+    author: 'drg. Andi Firmansyah, Sp.KGA',
+    authorTitle: 'Dokter Gigi Spesialis Anak — RS Cipto Mangunkusumo',
+    readers: '6.150',
+    rating: 4.8,
+    category: 'Gigi Anak',
+    image: 'https://images.unsplash.com/photo-1720649069293-f1e0e100be09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWJ5JTIwYm90dGxlJTIwZmVlZGluZyUyMGluZmFudCUyMG1pbGt8ZW58MXx8fHwxNzc3OTc2MTY1fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '6 menit', publishDate: '25 April 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'Early Childhood Caries (ECC), yang di Indonesia dikenal sebagai "karies botol", adalah kerusakan gigi parah yang menyerang bayi dan anak di bawah 6 tahun. Riskesdas 2018 melaporkan prevalensi karies pada anak usia 3–5 tahun di Indonesia mencapai 93% — menjadikannya masalah kesehatan gigi paling kritis pada anak usia dini.' },
+      { type: 'video', videoTitle: 'Karies Botol pada Bayi: Bahaya & Cara Mencegahnya', videoDesc: 'Pelajari mengapa kebiasaan tidur dengan botol susu berbahaya bagi gigi bayi dan cara pencegahan yang efektif.', videoId: 'KspSHT41Ync', videoSearch: 'karies botol ECC bayi balita pencegahan gigi anak' },
+      { type: 'heading', text: 'Mengapa Karies Botol Bisa Terjadi?' },
+      { type: 'paragraph', text: 'ECC terjadi ketika gigi bayi terpapar berulang kali dengan cairan manis dalam waktu lama — terutama saat bayi tidur dengan botol berisi susu formula, susu sapi, atau jus. Saat tidur, produksi air liur menurun drastis sehingga asam bakteri tidak bisa dinetralisir. Hasilnya: karies yang meluas sangat cepat.' },
+      { type: 'warning', text: 'Karies botol bisa menyerang SEMUA gigi depan atas sekaligus bahkan pada usia 12–18 bulan. Jika tidak segera ditangani, anak mungkin memerlukan pencabutan atau perawatan saluran akar di usia yang sangat muda.' },
+      { type: 'heading', text: 'Tanda-Tanda Awal yang Wajib Dikenali Orang Tua' },
+      { type: 'list', items: [
+        'Bintik atau garis putih pudar di dekat garis gusi (white spot — masih bisa dipulihkan jika segera ditangani)',
+        'Permukaan gigi tampak kasar atau berlekuk',
+        'Bercak cokelat kekuningan pada bagian depan gigi atas',
+        'Gigi tampak keropos atau terkikis',
+        'Anak rewel atau menolak makanan keras/dingin/manis',
+      ]},
+      { type: 'heading', text: 'Pencegahan ECC yang Efektif' },
+      { type: 'list', items: [
+        'JANGAN biarkan bayi tidur dengan botol berisi susu — berikan hanya saat terjaga',
+        'Jika menyusui malam, lap gusi/gigi dengan kain lembab setelahnya',
+        'Ganti botol dengan cangkir belajar minum (sippy cup) mulai usia 12 bulan',
+        'Gunakan pasta gigi berfluoride sejak gigi pertama tumbuh',
+        'Bawa anak ke dokter gigi saat gigi pertama tumbuh, paling lambat usia 1 tahun',
+        'Jika anak haus di malam hari, berikan air putih — bukan susu atau jus',
+      ]},
+      { type: 'tip', text: 'Jika anak tidak mau tidur tanpa botol, isi botol HANYA dengan air putih. Perubahan kebiasaan ini bisa mencegah ECC yang berpotensi menghancurkan semua gigi depan anak.' },
+      { type: 'sources', items: [
+        'American Academy of Pediatric Dentistry (AAPD). (2023). Policy on Early Childhood Caries (ECC). The Reference Manual of Pediatric Dentistry. Chicago, IL: AAPD; 131-136.',
+        'Kementerian Kesehatan RI. (2018). Riset Kesehatan Dasar (Riskesdas) 2018. Jakarta: Kemenkes RI. Hal. 163-168.',
+        'Ismail, A.I., & Sohn, W. (1999). A systematic review of clinical diagnostic criteria of early childhood caries. Journal of Public Health Dentistry, 59(3), 171-191.',
+        'Fejerskov, O., Nyvad, B., & Kidd, E. (Eds.). (2015). Dental Caries: The Disease and Its Clinical Management (3rd ed.). Wiley-Blackwell. Ch. 14.',
+        'Drury, T.F. et al. (1999). Diagnosing and reporting early childhood caries for research purposes. Journal of Public Health Dentistry, 59(3), 192-197.',
+      ]},
+    ],
+  },
+  {
+    id: 'kunjungan-pertama-dokter',
+    title: 'Kunjungan Pertama Anak ke Dokter Gigi: Panduan Lengkap Orang Tua',
+    description: 'Kapan harus membawa bayi ke dokter gigi? Apa yang terjadi saat kunjungan pertama? Panduan agar perjalanan pertama ke dokter gigi menjadi pengalaman positif.',
+    author: 'drg. Sinta Wulandari, Sp.KGA',
+    authorTitle: 'Spesialis Kedokteran Gigi Anak — Konsultan IDGAI',
+    readers: '5.740',
+    rating: 4.9,
+    category: 'Panduan Orang Tua',
+    image: 'https://images.unsplash.com/photo-1631051104176-4fb841f41c9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMGRlbnRpc3QlMjBmaXJzdCUyMHZpc2l0JTIwcGVkaWF0cmljJTIwZGVudGFsfGVufDF8fHx8MTc3Nzk3NjE2M3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '7 menit', publishDate: '28 April 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'AAPD dan Ikatan Dokter Gigi Anak Indonesia (IDGAI) merekomendasikan kunjungan pertama anak ke dokter gigi saat gigi pertama tumbuh, paling lambat usia 1 tahun. Namun survei menunjukkan mayoritas orang tua Indonesia baru membawa anak ke dokter gigi saat ada masalah — padahal saat itu kerusakan sudah terlanjur parah.' },
+      { type: 'video', videoTitle: 'Kunjungan Pertama Anak ke Dokter Gigi: Apa yang Terjadi?', videoDesc: 'Simak bagaimana kunjungan pertama ke dokter gigi anak berlangsung dan tips mempersiapkan anak agar tidak takut.', videoId: 'o1wHn9iDF7I', videoSearch: 'kunjungan pertama dokter gigi anak bayi persiapan' },
+      { type: 'heading', text: 'Mengapa Harus Sejak Usia 1 Tahun?' },
+      { type: 'list', items: [
+        'Deteksi dini risiko ECC (karies botol) dan karies awal lainnya',
+        'Orang tua mendapatkan edukasi langsung cara perawatan yang benar dari dokter',
+        'Anak mulai dikenalkan lingkungan klinik secara positif sebelum ada rasa sakit',
+        'Pemeriksaan frenulum (jaringan bawah lidah) yang bisa mengganggu perkembangan bicara',
+        'Evaluasi kebiasaan ngempeng, mengisap jempol, dan pola menyusu',
+      ]},
+      { type: 'heading', text: 'Apa yang Terjadi Saat Kunjungan Pertama?' },
+      { type: 'list', items: [
+        'Pemeriksaan ringan di pangkuan orang tua (knee-to-knee examination)',
+        'Menghitung gigi yang sudah tumbuh dan evaluasi kondisinya',
+        'Demonstrasi cara menyikat gigi bayi yang benar',
+        'Diskusi pola makan dan kebiasaan yang mempengaruhi gigi',
+        'Menjawab pertanyaan orang tua dan menjadwalkan kunjungan berikutnya',
+      ]},
+      { type: 'heading', text: 'Tips Menyiapkan Anak untuk Kunjungan Pertama' },
+      { type: 'list', items: [
+        'Pilih waktu saat anak segar dan tidak mengantuk (biasanya pagi hari)',
+        'Hindari kata menakutkan: "suntik", "sakit", "bor" — katakan "dokter mau lihat gigi kamu"',
+        'Baca buku anak bertema dokter gigi sebelum kunjungan',
+        'Orang tua tampil tenang — bayi sangat peka terhadap emosi orang tua',
+        'Berikan pujian setelah kunjungan (bukan makanan manis sebagai hadiah)',
+      ]},
+      { type: 'warning', text: 'Jangan tunggu sampai anak mengeluh sakit! Karies pada anak berkembang SANGAT cepat. Dalam hitungan bulan, bercak putih kecil bisa menjadi lubang yang memerlukan pencabutan. Kunjungan preventif jauh lebih murah dan tidak menyakitkan.' },
+      { type: 'tip', text: 'Riset membuktikan: anak yang memulai kunjungan dokter gigi sejak dini (sebelum ada nyeri) tumbuh dengan kecemasan dental yang lebih rendah, lebih kooperatif, dan biaya perawatan yang lebih sedikit sepanjang hidup.' },
+      { type: 'sources', items: [
+        'American Academy of Pediatric Dentistry (AAPD). (2023). Policy on the Dental Home. The Reference Manual of Pediatric Dentistry. Chicago, IL: AAPD; 47-49.',
+        'Ikatan Dokter Gigi Anak Indonesia (IDGAI). (2021). Pedoman Klinis Kedokteran Gigi Anak. Jakarta: IDGAI.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Kemenkes RI.',
+        'Casamassimo, P.S. et al. (2009). Beyond the dmft: The human and economic cost of early childhood caries. Journal of the American Dental Association, 140(6), 650-657.',
+        'Ng, M.W. (2002). Multicultural influences on child-rearing practices in pediatric dentistry. Pediatric Dentistry, 24(2), 96-100.',
+      ]},
+    ],
+  },
+  {
+    id: 'ibu-hamil-gigi',
+    title: 'Kesehatan Gigi Ibu Hamil: Dampaknya pada Janin dan Panduan Perawatan',
+    description: 'Kehamilan meningkatkan risiko penyakit gusi. Pelajari hubungannya dengan kelahiran prematur (risiko 7,5× lebih tinggi) dan cara aman menjaga gigi selama kehamilan.',
+    author: 'drg. Lestari Ningrum, Sp.Perio',
+    authorTitle: 'Spesialis Periodonsia — Konsultan Kesehatan Gigi Ibu Hamil',
+    readers: '7.230',
+    rating: 4.8,
+    category: 'Panduan Orang Tua',
+    image: 'https://images.unsplash.com/photo-1674775372064-8c75d3f8c757?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcmVnbmFudCUyMHdvbWFuJTIwZGVudGFsJTIwY2hlY2t1cCUyMG9yYWwlMjBoZWFsdGh8ZW58MXx8fHwxNzc3OTc2MTY0fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '7 menit', publishDate: '1 Mei 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'Penelitian Offenbacher et al. (1996) di Journal of Periodontology menunjukkan ibu hamil dengan periodontitis memiliki risiko 7,5 kali lebih tinggi melahirkan prematur dan bayi dengan berat lahir rendah. Ini menegaskan: kesehatan gigi ibu hamil bukan hanya soal estetika — ini langsung memengaruhi kesehatan janin.' },
+      { type: 'video', videoTitle: 'Kesehatan Gigi Ibu Hamil: Dampaknya pada Janin & Cara Merawatnya', videoDesc: 'Mengapa kesehatan gigi ibu hamil sangat penting dan bagaimana menjaga gigi dengan aman selama kehamilan.', videoId: '4oeaYTrjBPQ', videoSearch: 'kesehatan gigi ibu hamil perawatan aman kehamilan' },
+      { type: 'heading', text: 'Perubahan Mulut yang Normal Selama Kehamilan' },
+      { type: 'list', items: [
+        'Pregnancy gingivitis: Gusi merah, bengkak, dan mudah berdarah akibat lonjakan hormon estrogen dan progesteron',
+        'Morning sickness: Asam lambung yang sering naik dapat merusak email gigi (erosi asam)',
+        'Peningkatan nafsu camilan manis yang meningkatkan risiko karies',
+        'Pregnancy tumor: Benjolan merah pada gusi yang tidak berbahaya namun mengganggu',
+      ]},
+      { type: 'warning', text: 'JANGAN abaikan pregnancy gingivitis! Tanpa penanganan, kondisi ini dapat berkembang menjadi periodontitis — infeksi bakteri yang memasuki aliran darah, mencapai plasenta, memicu kontraksi dini dan kelahiran prematur.' },
+      { type: 'heading', text: 'Keamanan Perawatan Gigi Saat Hamil' },
+      { type: 'list', items: [
+        'Pemeriksaan rutin dan pembersihan: Aman di semua trimester',
+        'Trimester 2 (bulan 4–6): Waktu terbaik untuk prosedur elektif',
+        'Anestesi lokal (lidokain): Aman dalam dosis yang tepat — sesuai rekomendasi ACOG',
+        'Antibiotik: Amoksisilin dan klindamisin aman — hindari tetrasiklin',
+        'Rontgen gigi dengan pelindung apron: Aman jika memang diperlukan',
+      ]},
+      { type: 'heading', text: 'Panduan Praktis Perawatan Gigi Selama Kehamilan' },
+      { type: 'list', items: [
+        'Lakukan pemeriksaan gigi di trimester pertama dan informasikan kehamilan Anda',
+        'Sikat gigi 2x sehari dengan pasta berfluoride — lebih lembut jika gusi sensitif',
+        'Setelah muntah karena morning sickness: kumur air dahulu, tunggu 30 menit, baru sikat gigi',
+        'Konsumsi kalsium: susu, keju, yogurt untuk gigi janin yang terbentuk sejak minggu ke-6',
+        'Kurangi camilan manis dan asam yang meningkat akibat ngidam',
+      ]},
+      { type: 'tip', text: 'Gigi janin mulai terbentuk pada minggu ke-6 kehamilan. Kalsium dan vitamin D yang dikonsumsi ibu hamil langsung digunakan untuk membentuk email gigi susu bayi. Kekurangan nutrisi ini dapat mempengaruhi kualitas gigi anak seumur hidupnya.' },
+      { type: 'sources', items: [
+        'Offenbacher, S. et al. (1996). Periodontal infection as a possible risk factor for preterm low birth weight. Journal of Periodontology, 67(10 Suppl), 1103-1113.',
+        'Jeffcoat, M.K. et al. (2001). Periodontal infection and preterm birth. Journal of the American Dental Association, 132(7), 875-880.',
+        'American College of Obstetricians and Gynecologists (ACOG). (2017). Committee Opinion No. 569: Oral Health Care During Pregnancy. Obstetrics & Gynecology, 130(1), e41.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Pelayanan Kesehatan Gigi dan Mulut Ibu Hamil. Jakarta: Direktorat Bina Upaya Kesehatan.',
+        'Boggess, K.A., & Edelstein, B.L. (2006). Oral health in women during preconception and pregnancy. Maternal and Child Health Journal, 10(5), 169-174.',
+      ]},
+    ],
+  },
+  {
+    id: 'tumbuh-gigi-anak',
+    title: 'Panduan Lengkap Tahap Tumbuh Gigi Anak: Dari Bayi hingga Remaja',
+    description: 'Memahami jadwal tumbuh gigi primer dan permanen anak, cara meringankan ketidaknyamanan, dan kapan orang tua perlu khawatir. Disertai eruption chart resmi AAPD.',
+    author: 'drg. Ratna Komala Dewi, Sp.KGA',
+    authorTitle: 'Spesialis Kedokteran Gigi Anak',
+    readers: '9.120',
+    rating: 4.8,
+    category: 'Gigi Anak',
+    image: 'https://images.unsplash.com/photo-1622408064430-9728776f96e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWJ5JTIwdGVldGglMjBncm93dGglMjB0b2RkbGVyJTIwb3JhbCUyMGh5Z2llbmV8ZW58MXx8fHwxNzc3OTc2MTY3fDA&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '8 menit', publishDate: '3 Mei 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'Memahami jadwal tumbuh gigi anak membantu orang tua mengetahui apa yang normal dan kapan perlu konsultasi. Setiap anak memiliki jadwal sedikit berbeda — variasi 6 bulan lebih awal atau lebih lambat dari rata-rata masih dianggap normal oleh AAPD.' },
+      { type: 'video', videoTitle: 'Tahap Tumbuh Gigi Bayi hingga Remaja: Panduan Lengkap Orang Tua', videoDesc: 'Pahami jadwal tumbuh gigi susu dan permanen, tanda-tanda normal, dan cara meringankan ketidaknyamanan.', videoId: 'Ma1qzp6DTBA', videoSearch: 'tumbuh gigi bayi anak jadwal tahap orang tua' },
+      { type: 'heading', text: 'Gigi Susu (Primer): 20 Gigi | Usia ±6 Bulan – 3 Tahun' },
+      { type: 'table', rows: [
+        { label: 'Seri Tengah Bawah (2)', value: '±6–10 bulan — biasanya pertama tumbuh' },
+        { label: 'Seri Tengah Atas (2)', value: '±8–12 bulan' },
+        { label: 'Seri Lateral Atas & Bawah (4)', value: '±9–16 bulan' },
+        { label: 'Geraham Susu Pertama (4)', value: '±13–19 bulan' },
+        { label: 'Taring Susu (4)', value: '±16–23 bulan' },
+        { label: 'Geraham Susu Kedua (4)', value: '±23–33 bulan' },
+        { label: 'Lengkap 20 Gigi Susu', value: '±usia 3 tahun' },
+      ]},
+      { type: 'heading', text: 'Tanda-Tanda Normal Tumbuh Gigi' },
+      { type: 'list', items: [
+        'Gusi membengkak dan memerah di area gigi yang akan tumbuh',
+        'Anak lebih rewel dan sering menggigit benda',
+        'Produksi air liur meningkat (drooling lebih banyak)',
+        'Gangguan tidur ringan',
+        'Suhu tubuh sedikit meningkat (TIDAK sampai demam >38°C)',
+      ]},
+      { type: 'warning', text: 'Demam tinggi (>38°C), diare, dan ruam kulit BUKAN gejala tumbuh gigi. Penelitian tidak menemukan hubungan antara tumbuh gigi dengan demam atau diare signifikan. Jika anak mengalami ini, segera konsultasi ke dokter anak.' },
+      { type: 'heading', text: 'Cara Meringankan Ketidaknyamanan Tumbuh Gigi' },
+      { type: 'list', items: [
+        'Pijat gusi dengan jari bersih atau kain lembab dingin',
+        'Berikan teether yang sudah didinginkan di kulkas (bukan freezer)',
+        'Distraksi dengan mainan atau aktivitas baru',
+        'Jika nyeri sangat mengganggu: parasetamol sesuai dosis dokter',
+      ]},
+      { type: 'heading', text: 'Gigi Permanen: 32 Gigi | Usia ±6–25 Tahun' },
+      { type: 'table', rows: [
+        { label: 'Geraham Permanen Pertama (4)', value: '±6–7 tahun — SERING dikira gigi susu oleh orang tua!' },
+        { label: 'Seri Tengah Atas & Bawah (4)', value: '±6–8 tahun' },
+        { label: 'Seri Lateral (4)', value: '±7–9 tahun' },
+        { label: 'Taring & Premolar (8)', value: '±9–13 tahun' },
+        { label: 'Geraham Kedua (4)', value: '±11–13 tahun' },
+        { label: 'Geraham Bungsu/Wisdom (4)', value: '±17–25 tahun (bisa tidak tumbuh)' },
+      ]},
+      { type: 'tip', text: 'PENTING untuk orang tua: Geraham permanen pertama tumbuh di usia 6-7 tahun di belakang gigi susu terakhir TANPA menggantikan gigi susu apapun. Ini gigi permanen seumur hidup yang sering keliru dikira gigi susu, sehingga terabaikan dan berlubang!' },
+      { type: 'sources', items: [
+        'American Academy of Pediatric Dentistry (AAPD). (2023). Eruption Charts. The Reference Manual of Pediatric Dentistry. Chicago, IL: AAPD.',
+        'Proffit, W.R., Fields, H.W., & Sarver, D.M. (2018). Contemporary Orthodontics (6th ed.). Elsevier. Ch. 2: Development of Dentition and Occlusion.',
+        'Soeprapto, A. (2016). Ilmu Kedokteran Gigi Pencegahan. Yogyakarta: Gadjah Mada University Press. Hal. 45-67.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Kemenkes RI.',
+      ]},
+    ],
+  },
+  {
+    id: 'gigi-anak-sekolah',
+    title: 'Menjaga Gigi Anak Usia Sekolah 6–12 Tahun: Strategi untuk Orang Tua',
+    description: 'Usia sekolah adalah masa kritis pergantian gigi susu ke permanen. Panduan berdasarkan standar UKGS Kemenkes RI untuk melewati masa transisi dengan gigi yang sehat.',
+    author: 'drg. Hendra Purnama, Sp.KGA',
+    authorTitle: 'Dokter Gigi Spesialis Anak — Konsultan UKGS Kemenkes RI',
+    readers: '6.890',
+    rating: 4.7,
+    category: 'Gigi Anak',
+    image: 'https://images.unsplash.com/photo-1621354748873-1d97fff3f8f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzY2hvb2wlMjBjaGlsZCUyMGJydXNoaW5nJTIwdGVldGglMjB0b290aGJydXNofGVufDF8fHx8MTc3Nzk3NjE2NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '7 menit', publishDate: '5 Mei 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'Usia 6–12 tahun adalah "mixed dentition period" — masa transisi di mana gigi susu copot satu per satu dan digantikan gigi permanen. Ini periode kritis yang memerlukan perhatian ekstra. Karies yang terjadi pada gigi permanen di usia ini akan bertahan seumur hidup.' },
+      { type: 'video', videoTitle: 'Menjaga Gigi Anak Usia Sekolah 6–12 Tahun: Strategi Orang Tua', videoDesc: 'Cara menghadapi masa pergantian gigi susu ke permanen dan strategi mencegah karies pada anak sekolah dasar.', videoId: 'KWSHMbT4go0', videoSearch: 'gigi anak sekolah dasar pergantian gigi permanen cara merawat' },
+      { type: 'heading', text: 'Tantangan Unik Anak Usia Sekolah' },
+      { type: 'list', items: [
+        'Anak mulai mandiri menyikat gigi namun teknik masih sering belum sempurna',
+        'Terpapar jajanan sekolah tinggi gula (permen, minuman kemasan, biskuit)',
+        'Geraham permanen pertama (usia 6-7 tahun) sering dikira gigi susu dan diabaikan',
+        'Anak mulai tidak mau diawasi saat sikat gigi oleh orang tua',
+        'Trauma gigi akibat jatuh atau kecelakaan saat bermain meningkat di usia ini',
+      ]},
+      { type: 'heading', text: 'Peran Ideal Orang Tua di Usia Sekolah' },
+      { type: 'list', items: [
+        'Tetap bantu dan awasi menyikat gigi hingga usia 7-8 tahun (koordinasi tangan belum sempurna)',
+        'Setelah usia 8 tahun: biarkan anak sikat sendiri, namun periksa kualitasnya tiap malam',
+        'Batasi camilan manis maksimal 2 kali sehari dan selalu setelah makan utama',
+        'Sediakan bekal sekolah sehat: buah, keju, yogurt, kacang-kacangan',
+        'Kenalkan penggunaan benang gigi mulai usia 7-8 tahun',
+        'Kunjungan dokter gigi setiap 6 bulan tanpa pengecualian',
+      ]},
+      { type: 'heading', text: 'Sealant Gigi: Perlindungan Ekstra untuk Geraham' },
+      { type: 'paragraph', text: 'Sealant adalah lapisan plastis tipis di permukaan kunyah geraham permanen. Terbukti mengurangi risiko karies hingga 80% (Beauchamp et al., 2008). Prosedur tidak menyakitkan, hanya ±15 menit per gigi, dan sangat dianjurkan sesaat setelah geraham permanen pertama tumbuh (usia 6-7 tahun).' },
+      { type: 'heading', text: 'Manfaatkan Program UKGS Kemenkes RI' },
+      { type: 'paragraph', text: 'Program Usaha Kesehatan Gigi Sekolah (UKGS) Kemenkes RI menyediakan pemeriksaan gigi gratis, edukasi, dan perawatan dasar bagi murid SD. Koordinasikan dengan sekolah anak Anda untuk memanfaatkan program ini secara maksimal.' },
+      { type: 'warning', text: 'Geraham permanen pertama adalah gigi yang PALING SERING berlubang pada anak sekolah karena: (1) bentuknya beralur dalam sehingga mudah menjebak plak, (2) orang tua salah mengira itu gigi susu, (3) anak sulit menjangkau area belakang saat menyikat.' },
+      { type: 'tip', text: 'Buat "dental contract" bersama anak: ajak anak menandatangani komitmen sikat gigi 2x sehari. Reward berupa aktivitas favorit (bukan makanan manis). Melibatkan anak dalam keputusan terbukti meningkatkan kepatuhan secara signifikan.' },
+      { type: 'sources', items: [
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Direktorat Bina Kesehatan Masyarakat.',
+        'Welbury, R., Duggal, M.S., & Hosey, M.T. (Eds.). (2012). Paediatric Dentistry (4th ed.). Oxford University Press. Ch. 5.',
+        'Beauchamp, J. et al. (2008). Evidence-based clinical recommendations for pit-and-fissure sealants. Journal of the American Dental Association, 139(3), 257-268.',
+        'World Health Organization (WHO). (2003). The World Oral Health Report 2003. Geneva: WHO.',
+        'Kemenkes RI. (2018). Riskesdas 2018. Jakarta: Badan Litbang Kesehatan. Hal. 163-170.',
+      ]},
+    ],
+  },
+  {
+    id: 'nutrisi-gigi-anak',
+    title: 'Nutrisi untuk Gigi Anak yang Kuat: Panduan Lengkap Berbasis Sains',
+    description: 'Apa yang anak makan menentukan kekuatan giginya. Panduan makanan terbaik dan terburuk berdasarkan rekomendasi WHO, IDAI, dan penelitian Moynihan & Petersen (2004).',
+    author: 'drg. Maya Indra & Dr. Nurul Hidayah, Sp.GK',
+    authorTitle: 'Dokter Gigi & Spesialis Gizi Klinik',
+    readers: '7.640',
+    rating: 4.9,
+    category: 'Nutrisi',
+    image: 'https://images.unsplash.com/photo-1643274390061-cef676c273d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwYXJlbnQlMjBjaGlsZCUyMHRlZXRoJTIwYnJ1c2hpbmclMjB0b2dldGhlciUyMGJhdGhyb29tfGVufDF8fHx8MTc3Nzk3NjE2OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true, readTime: '7 menit', publishDate: '7 Mei 2025', forParents: true,
+    content: [
+      { type: 'paragraph', text: 'WHO (2015) merekomendasikan: batasi konsumsi gula bebas di bawah 10% total kalori harian. Moynihan & Petersen (2004) membuktikan: gula bebas adalah faktor risiko karies yang paling kuat dan paling dapat dimodifikasi melalui perubahan pola makan keluarga.' },
+      { type: 'video', videoTitle: 'Nutrisi untuk Gigi Anak yang Kuat: Makanan Terbaik & Terburuk', videoDesc: 'Panduan berbasis sains tentang makanan yang memperkuat gigi anak dan makanan yang harus dibatasi.', videoId: 'EneH_fxHOGs', videoSearch: 'nutrisi makanan untuk gigi anak kuat sehat gula karies' },
+      { type: 'heading', text: 'Nutrisi Kunci untuk Pembentukan Gigi yang Kuat' },
+      { type: 'table', rows: [
+        { label: 'Kalsium', value: 'Membentuk email & dentin | Sumber: susu, keju, yogurt, brokoli, ikan teri' },
+        { label: 'Fosfor', value: 'Remineralisasi email | Sumber: daging, ikan, telur, kacang-kacangan' },
+        { label: 'Vitamin D', value: 'Penyerapan kalsium | Sumber: sinar matahari pagi, ikan berlemak, telur' },
+        { label: 'Vitamin C', value: 'Kesehatan gusi & kolagen | Sumber: jeruk, stroberi, paprika, brokoli' },
+        { label: 'Vitamin A', value: 'Pembentukan email & saliva | Sumber: wortel, ubi jalar, bayam, hati' },
+        { label: 'Fluoride', value: 'Pencegahan karies | Sumber: air berfluoride, pasta gigi, teh hijau' },
+      ]},
+      { type: 'heading', text: 'Makanan Pelindung Gigi Terbaik untuk Anak' },
+      { type: 'list', items: [
+        'Keju: Meningkatkan pH mulut, merangsang saliva, kasein melindungi email — camilan terbaik setelah makan manis!',
+        'Susu & yogurt plain: Kalsium tinggi, tanpa gula bebas',
+        'Apel, wortel, seledri: Merangsang saliva dan membersihkan gigi secara mekanis',
+        'Kacang-kacangan: Kaya fosfor dan mineral, rendah gula',
+        'Air putih: Membilas sisa makanan dan menjaga kelembaban mulut',
+        'Teh hijau tanpa gula: Polifenol menghambat pertumbuhan bakteri S. mutans',
+      ]},
+      { type: 'heading', text: 'Makanan Berisiko Tinggi yang Perlu Dibatasi' },
+      { type: 'list', items: [
+        'Permen, cokelat, kembang gula: Gula + kontak lama = lingkungan asam ideal untuk bakteri',
+        'Minuman bersoda: Asam fosfat langsung melarutkan email + gula tinggi',
+        'Jus buah kemasan: Mengandung gula bebas tinggi meski terkesan "alami"',
+        'Makanan lengket (karamel, dodol, cereal bar): Menempel lama di gigi, sulit dibersihkan',
+        'Minuman energi & sport drink: Sangat asam dan bergula tinggi',
+      ]},
+      { type: 'heading', text: 'Strategi Praktis untuk Orang Tua' },
+      { type: 'list', items: [
+        'Aturan "2x sehari": Camilan manis maksimal 2 kali, selalu diikuti berkumur atau minum air',
+        'Berikan camilan manis sebagai bagian makan utama, bukan di antara jam makan',
+        'Ganti camilan sekolah: Keju, buah segar, dan kacang lebih baik dari biskuit kemasan',
+        'Biasakan anak minum air putih dan susu plain (bukan susu rasa)',
+        'Teladan adalah kunci: Jika orang tua makan sehat, anak lebih mudah mengikuti',
+      ]},
+      { type: 'tip', text: 'Temuan penting WHO: Frekuensi konsumsi gula lebih berbahaya dari jumlahnya. Anak yang ngemil manis setiap jam lebih berisiko karies daripada anak yang makan banyak manis sekaligus saat makan. Mulut butuh jeda untuk memulihkan pH normal.' },
+      { type: 'sources', items: [
+        'Moynihan, P., & Petersen, P.E. (2004). Diet, nutrition and the prevention of dental diseases. Public Health Nutrition, 7(1A), 201-226.',
+        'World Health Organization (WHO). (2015). Guideline: Sugars Intake for Adults and Children. Geneva: WHO.',
+        'Ikatan Dokter Anak Indonesia (IDAI). (2017). Pedoman Nutrisi Anak. Jakarta: IDAI. Hal. 78-92.',
+        'Caglar, E., Kargul, B., & Tanboga, I. (2005). Bacteriotherapy and probiotics role on oral health. Oral Diseases, 11(3), 131-137.',
+        'Marshall, T.A. (2009). Nomenclature, characteristics, and dietary intakes of sugars. Journal of the American Dental Association, 140(1), 61-64.',
+      ]},
     ],
   },
 ];

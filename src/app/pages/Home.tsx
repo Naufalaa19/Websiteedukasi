@@ -9,8 +9,9 @@ import { FAQ } from '../components/FAQ';
 import { Footer } from '../components/Footer';
 import { CourseCard } from '../components/CourseCard';
 import { WHOStandards } from '../components/WHOStandards';
+import { ParentHub } from '../components/ParentHub';
 import { articles } from '../data/articles';
-import { Gamepad2, HelpCircle, MessageSquare, ChevronRight } from 'lucide-react';
+import { Gamepad2, HelpCircle, MessageSquare, ChevronRight, ClipboardList } from 'lucide-react';
 
 const interactiveFeatures = [
   {
@@ -18,10 +19,10 @@ const interactiveFeatures = [
     icon: Gamepad2,
     emoji: '🎮',
     title: 'Games Edukatif',
-    desc: '5 game interaktif: Sikat Gigi, Pilah Makanan, Cocokkan Masalah, TTS, dan Ular Tangga! Belajar sambil bermain!',
+    desc: '7 game interaktif: Sikat Gigi, Pilah Makanan, TTS, Ular Tangga, Orang Tua Cerdas & Timer Sikat! Belajar sambil bermain!',
     color: 'from-teal-400 to-cyan-500',
     btnColor: 'bg-teal-600 hover:bg-teal-700',
-    badge: '5 Game',
+    badge: '7 Game',
   },
   {
     to: '/quiz',
@@ -32,6 +33,16 @@ const interactiveFeatures = [
     color: 'from-indigo-400 to-purple-500',
     btnColor: 'bg-indigo-600 hover:bg-indigo-700',
     badge: '15 Soal',
+  },
+  {
+    to: '/evaluasi',
+    icon: ClipboardList,
+    emoji: '📋',
+    title: 'Evaluasi Orang Tua',
+    desc: '40 soal Benar/Salah untuk mengukur pengetahuan orang tua tentang menjaga kebersihan gigi dan mulut anak.',
+    color: 'from-amber-400 to-orange-500',
+    btnColor: 'bg-amber-600 hover:bg-amber-700',
+    badge: '40 Soal',
   },
   {
     to: '/komentar',
@@ -66,7 +77,7 @@ export default function Home() {
               Lebih dari sekedar membaca — uji pengetahuan, mainkan game, dan berdiskusi bersama komunitas!
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {interactiveFeatures.map((feat) => (
               <Link key={feat.to} to={feat.to} className="group bg-white rounded-3xl border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <div className={`h-36 bg-gradient-to-br ${feat.color} flex items-center justify-center relative overflow-hidden`}>
@@ -115,6 +126,7 @@ export default function Home() {
                   category={article.category}
                   image={article.image}
                   isFree={article.isFree}
+                  forParents={article.forParents}
                 />
               </Link>
             ))}
@@ -124,6 +136,7 @@ export default function Home() {
 
       <Features />
       <WHOStandards />
+      <ParentHub />
       <Tips />
       <Gallery />
 

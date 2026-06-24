@@ -482,6 +482,24 @@ const EXTRA_GAMES = [
     badge: '2 Pemain',
     badgeColor: 'bg-emerald-100 text-emerald-700',
   },
+  {
+    route: '/games/ortu',
+    title: 'Orang Tua Cerdas',
+    desc: '8 skenario nyata keputusan kesehatan gigi anak. Seberapa siap Anda menjaga senyum si kecil?',
+    emoji: '👨‍👩‍👧',
+    color: 'from-orange-400 to-rose-500',
+    badge: 'Untuk Orang Tua',
+    badgeColor: 'bg-orange-100 text-orange-700',
+  },
+  {
+    route: '/tools/timer',
+    title: 'Timer Sikat Gigi 2 Menit',
+    desc: 'Timer interaktif dengan panduan area per area. Bantu anak menyikat gigi dengan benar dan menyenangkan!',
+    emoji: '⏱️',
+    color: 'from-teal-400 to-cyan-600',
+    badge: 'Alat Bantu',
+    badgeColor: 'bg-teal-100 text-teal-700',
+  },
 ];
 
 export default function Games() {
@@ -509,7 +527,7 @@ export default function Games() {
           <>
             <div className="text-center mb-10">
               <h2 className="text-gray-800 mb-2" style={{ fontSize: '1.5rem', fontWeight: 700 }}>Pilih Game</h2>
-              <p className="text-gray-500 text-sm">Tersedia <strong>5 game interaktif</strong> tentang kesehatan gigi dan mulut</p>
+              <p className="text-gray-500 text-sm">Tersedia <strong>7 game & alat interaktif</strong> tentang kesehatan gigi dan mulut</p>
             </div>
 
             {/* Inline games */}
@@ -546,10 +564,10 @@ export default function Games() {
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-px bg-gray-200 flex-1" />
-                <span className="text-gray-400 text-xs font-medium uppercase tracking-wide">Game Halaman Penuh</span>
+                <span className="text-gray-400 text-xs font-medium uppercase tracking-wide">Game & Alat Halaman Penuh</span>
                 <div className="h-px bg-gray-200 flex-1" />
               </div>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {EXTRA_GAMES.map(game => (
                   <Link
                     key={game.route}
@@ -580,6 +598,9 @@ export default function Games() {
                 <div className="flex gap-2"><span>🦷</span><span>Sikat gigi yang ideal adalah 2 menit, 2x sehari, dengan pasta berfluoride</span></div>
                 <div className="flex gap-2"><span>🧵</span><span>Benang gigi membersihkan 35% area gigi yang tidak bisa dijangkau sikat gigi</span></div>
                 <div className="flex gap-2"><span>🏥</span><span>Periksakan gigi ke dokter setiap 6 bulan meski tidak ada keluhan</span></div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-teal-100 text-xs text-teal-600">
+                📚 Sumber: WHO Oral Health Programme (2022) · Kemenkes RI Pedoman UKGS (2012) · AAPD Reference Manual (2023)
               </div>
             </div>
           </>

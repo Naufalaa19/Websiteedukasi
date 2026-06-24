@@ -9,9 +9,10 @@ interface CourseCardProps {
   category: string;
   image: string;
   isFree?: boolean;
+  forParents?: boolean;
 }
 
-export function CourseCard({ title, description, author, readers, rating, category, image, isFree }: CourseCardProps) {
+export function CourseCard({ title, description, author, readers, rating, category, image, isFree, forParents }: CourseCardProps) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 hover:-translate-y-1 cursor-pointer h-full">
       {/* Image */}
@@ -22,13 +23,18 @@ export function CourseCard({ title, description, author, readers, rating, catego
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-        <div className="absolute top-3 left-3 flex gap-2">
+        <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
           <span className="bg-teal-500 text-white text-xs px-3 py-1 rounded-full font-medium">
             {category}
           </span>
           {isFree && (
             <span className="bg-amber-400 text-white text-xs px-3 py-1 rounded-full font-medium">
               Gratis
+            </span>
+          )}
+          {forParents && (
+            <span className="bg-orange-500 text-white text-xs px-3 py-1 rounded-full font-medium">
+              👨‍👩‍👧 Orang Tua
             </span>
           )}
         </div>
