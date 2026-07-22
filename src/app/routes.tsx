@@ -9,6 +9,7 @@ import BrushingTimer from './pages/BrushingTimer';
 import Quiz from './pages/Quiz';
 import Komentar from './pages/Komentar';
 import Evaluasi from './pages/Evaluasi';
+import AdminVisitors from './pages/AdminVisitors';
 
 export const router = createBrowserRouter([
   { path: '/', Component: Home },
@@ -21,4 +22,5 @@ export const router = createBrowserRouter([
   { path: '/quiz', Component: Quiz },
   { path: '/komentar', Component: Komentar },
   { path: '/evaluasi', Component: Evaluasi },
+  { path: '/admin', Component: AdminVisitors },
 ]);
