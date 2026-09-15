@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router';
+import { RootLayout } from './components/RootLayout';
 import Home from './pages/Home';
 import ArticleDetail from './pages/ArticleDetail';
 import Games from './pages/Games';
@@ -12,15 +13,20 @@ import Evaluasi from './pages/Evaluasi';
 import AdminVisitors from './pages/AdminVisitors';
 
 export const router = createBrowserRouter([
-  { path: '/', Component: Home },
-  { path: '/materi/:id', Component: ArticleDetail },
-  { path: '/games', Component: Games },
-  { path: '/games/tts', Component: GameTTS },
-  { path: '/games/ular-tangga', Component: GameUlarTangga },
-  { path: '/games/ortu', Component: GameParents },
-  { path: '/tools/timer', Component: BrushingTimer },
-  { path: '/quiz', Component: Quiz },
-  { path: '/komentar', Component: Komentar },
-  { path: '/evaluasi', Component: Evaluasi },
-  { path: '/admin', Component: AdminVisitors },
+  {
+    Component: RootLayout,
+    children: [
+      { path: '/', Component: Home },
+      { path: '/materi/:id', Component: ArticleDetail },
+      { path: '/games', Component: Games },
+      { path: '/games/tts', Component: GameTTS },
+      { path: '/games/ular-tangga', Component: GameUlarTangga },
+      { path: '/games/ortu', Component: GameParents },
+      { path: '/tools/timer', Component: BrushingTimer },
+      { path: '/quiz', Component: Quiz },
+      { path: '/komentar', Component: Komentar },
+      { path: '/evaluasi', Component: Evaluasi },
+      { path: '/admin', Component: AdminVisitors },
+    ],
+  },
 ]);
