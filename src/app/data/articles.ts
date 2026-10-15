@@ -16,7 +16,7 @@ export interface Article {
 }
 
 export interface ArticleSection {
-  type: 'paragraph' | 'heading' | 'subheading' | 'list' | 'warning' | 'tip' | 'table' | 'sources' | 'video';
+  type: 'paragraph' | 'heading' | 'subheading' | 'list' | 'warning' | 'tip' | 'table' | 'sources' | 'video' | 'image';
   text?: string;
   items?: string[];
   rows?: { label: string; value: string }[];
@@ -24,6 +24,9 @@ export interface ArticleSection {
   videoTitle?: string;
   videoDesc?: string;
   videoId?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  imageCaption?: string;
 }
 
 export const articles: Article[] = [
@@ -559,6 +562,152 @@ export const articles: Article[] = [
         'Moynihan, P., & Petersen, P.E. (2004). Diet, nutrition and the prevention of dental diseases. Public Health Nutrition, 7(1A), 201-226.',
         'World Health Organization. (2015). Guideline: Sugars Intake for Adults and Children. Geneva: WHO.',
         'Touger-Decker, R., & van Loveren, C. (2003). Sugars and dental caries. The American Journal of Clinical Nutrition, 78(4), 881S-892S.',
+      ]},
+    ],
+  },
+
+  {
+    id: 'teknik-sikat-gigi',
+    title: 'Teknik Menyikat Gigi yang Benar: Bass, Stillman, Charters & Fones',
+    description: 'Panduan ilmiah 4 teknik menyikat gigi yang direkomendasikan — Modified Bass untuk dewasa, Fones untuk anak-anak, Stillman Modifikasi untuk gusi sensitif, dan Charters untuk pembersihan interdental — dilengkapi gambar ilustrasi dan referensi Kemenkes RI serta jurnal internasional.',
+    author: 'drg. Anisa Putri, Sp.Perio',
+    authorTitle: 'Spesialis Periodonsia — Konsultan Edukasi Kesehatan Gigi Masyarakat',
+    readers: '7.450',
+    rating: 4.9,
+    category: 'Kebersihan Gigi',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b290aGJydXNoJTIwYnJ1c2hpbmclMjB0ZWV0aHxlbnwxfHx8fDE3NzY3NzMwMzR8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    isFree: true,
+    readTime: '9 menit',
+    publishDate: '22 Mei 2025',
+    content: [
+      { type: 'paragraph', text: 'Menyikat gigi adalah tindakan kebersihan mulut paling mendasar, namun penelitian menunjukkan bahwa lebih dari 60% orang tidak melakukannya dengan teknik yang benar. Kementerian Kesehatan RI (2012) menegaskan dalam Pedoman UKGS bahwa teknik menyikat gigi yang tepat sama pentingnya dengan frekuensi menyikat. Teknik yang salah tidak hanya gagal membersihkan plak secara optimal, tetapi juga dapat menyebabkan resesi gusi (gusi menyusut) dan abrasi email gigi jangka panjang.' },
+      { type: 'video', videoTitle: 'Cara Menyikat Gigi yang Benar: 4 Teknik Terbaik Menurut Dokter Gigi', videoDesc: 'Demonstrasi visual teknik Bass, Stillman, Charters, dan Fones — dilengkapi penjelasan untuk dewasa dan anak-anak.', videoId: '7WmJNB5WNDY', videoSearch: 'teknik menyikat gigi yang benar bass stillman charters fones dokter gigi' },
+
+      { type: 'heading', text: 'Perbandingan 4 Teknik Utama Menyikat Gigi' },
+      { type: 'table', rows: [
+        { label: 'Modified Bass', value: 'Sudut 45° ke garis gusi, gerakan vibrasi kecil lalu sapuan ke mahkota. Direkomendasikan untuk dewasa sehat dan pasien periodontal.' },
+        { label: 'Stillman Modifikasi (Roll)', value: 'Bulu sikat diarahkan ke apeks gigi, tekanan ringan, putar dan sapukan ke arah mahkota. Baik untuk pijatan gusi dan gusi sensitif.' },
+        { label: 'Charters', value: 'Bulu sikat mengarah ke mahkota pada sudut 45°, gerakan rotasi-vibrasi. Terbaik untuk membersihkan sela gigi dan pasca bedah periodontal.' },
+        { label: 'Fones (Sirkuler)', value: 'Gerakan melingkar besar pada semua permukaan dengan gigi tertutup. Paling mudah dipelajari — direkomendasikan Kemenkes RI untuk anak-anak.' },
+      ]},
+
+      { type: 'heading', text: '1. Teknik Modified Bass — Standar Emas untuk Dewasa' },
+      { type: 'paragraph', text: 'Teknik Modified Bass dikembangkan oleh Charles C. Bass pada tahun 1954 dan hingga kini diakui sebagai teknik paling efektif untuk dewasa oleh American Dental Association (ADA) dan Kemenkes RI. Teknik ini sangat efektif membersihkan daerah sulkus gingiva (celah antara gigi dan gusi), tempat utama akumulasi plak patogen.' },
+      { type: 'image',
+        imageUrl: 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b290aGJydXNoJTIwdGVjaG5pcXVlJTIwZGVudGFsfGVufDF8fHx8MTc3Njc3MzAzNHww&ixlib=rb-4.1.0&q=80&w=800',
+        imageAlt: 'Ilustrasi sudut sikat gigi 45 derajat ke garis gusi — Teknik Bass',
+        imageCaption: 'Posisi bulu sikat 45° terhadap garis gusi pada Teknik Modified Bass (sumber: adaptasi dari Bass, 1954 & Wilkins, Clinical Practice of the Dental Hygienist)'
+      },
+      { type: 'subheading', text: 'Langkah-Langkah Teknik Modified Bass:' },
+      { type: 'list', items: [
+        'Pegang sikat gigi dengan pegangan pensil (pen grasp) — lebih terkontrol daripada pegangan penuh',
+        'Posisikan kepala sikat pada sudut 45° terhadap garis gusi (cemento-enamel junction)',
+        'Tekan lembut hingga bulu sikat sedikit masuk ke celah antara gigi dan gusi (sulkus gingiva) — sekitar 1 mm',
+        'Lakukan gerakan vibrasi kecil ke depan-belakang sebanyak 10–15 kali di tempat yang sama (jangan menggeser)',
+        'Setelah vibrasi, sapukan sikat ke arah mahkota gigi (atas ke bawah untuk rahang atas, bawah ke atas untuk rahang bawah) — ini adalah modifikasi dari teknik Bass original',
+        'Pindah ke segmen berikutnya dengan tumpang-tindih (overlapping) untuk memastikan tidak ada area yang terlewat',
+        'Sikat permukaan luar (bukal), permukaan dalam (lingual/palatal), dan permukaan kunyah (oklusal) secara terpisah',
+        'Untuk permukaan dalam gigi depan, posisikan sikat secara vertikal dan lakukan gerakan sapuan ke atas-bawah',
+      ]},
+      { type: 'tip', text: 'Teknik Modified Bass memerlukan latihan. Selama 1–2 minggu pertama, gunakan cermin untuk memastikan sudut sikat tepat 45°. Tanda sikat berhasil masuk ke sulkus: bulu sikat sedikit mekar di bawah garis gusi — ini normal dan tidak menyakitkan jika tekanan ringan.' },
+      { type: 'warning', text: 'JANGAN menggunakan tekanan kuat saat sikat gigi. Penelitian Sangnes & Gjermo (1976) membuktikan bahwa tekanan berlebih adalah penyebab utama abrasi email dan resesi gusi — bukan frekuensi atau durasi sikat. Pegang sikat seperti memegang pensil, bukan mengepal.' },
+
+      { type: 'heading', text: '2. Teknik Stillman Modifikasi (Teknik Roll)' },
+      { type: 'paragraph', text: 'Teknik Stillman Modifikasi, yang juga dikenal sebagai Teknik Roll atau teknik sapuan, dikembangkan oleh P.R. Stillman dan dimodifikasi oleh McCall. Teknik ini menggabungkan gerakan pijatan pada gusi dengan sapuan bersih menuju mahkota gigi. Sangat direkomendasikan untuk pasien dengan gusi sensitif, resesi gusi ringan, dan sebagai teknik transisi bagi pemula yang belum terbiasa dengan teknik Bass.' },
+      { type: 'image',
+        imageUrl: 'https://images.unsplash.com/photo-1598322253396-6db7e9ba41c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b290aGJydXNoJTIwc21pbGUlMjBkZW50YWwlMjBjbGVhbnxlbnwxfHx8fDE3NzY3NzMwMzR8MA&ixlib=rb-4.1.0&q=80&w=800',
+        imageAlt: 'Ilustrasi gerakan roll/sapuan sikat gigi dari gusi ke mahkota — Teknik Stillman Modifikasi',
+        imageCaption: 'Gerakan sapuan (roll) dari gusi ke mahkota pada Teknik Stillman Modifikasi — efektif memijat gusi sekaligus membersihkan plak'
+      },
+      { type: 'subheading', text: 'Langkah-Langkah Teknik Stillman Modifikasi (Roll):' },
+      { type: 'list', items: [
+        'Posisikan kepala sikat dengan bulu sikat mengarah ke akar gigi (apikal) — ke atas untuk rahang atas, ke bawah untuk rahang bawah',
+        'Tekan bulu sikat lembut pada gusi sehingga terjadi pemutihan ringan (blanching) — ini menunjukkan tekanan pijatan yang tepat',
+        'Lakukan gerakan vibrasi ringan di tempat (5–7 kali) untuk memijat gusi dan menginfiltrasi celah gigi',
+        'Setelah vibrasi, putar pergelangan tangan dan sapukan sikat ke arah mahkota gigi dengan gerakan menyapu yang tegas namun lembut',
+        'Ulangi gerakan ini 5–6 kali di setiap area sebelum berpindah ke segmen berikutnya',
+        'Pastikan sapuan selalu searah — dari gusi menuju mahkota — agar plak tersapu keluar dari celah gigi',
+      ]},
+      { type: 'tip', text: 'Teknik Roll sangat baik untuk pasien yang baru sembuh dari gingivitis atau memiliki gusi yang mudah berdarah. Gerakan pijatan meningkatkan sirkulasi darah pada jaringan gusi, mempercepat pemulihan, dan memperkuat jaringan periodontal.' },
+
+      { type: 'heading', text: '3. Teknik Charters — Terbaik untuk Pembersihan Sela Gigi' },
+      { type: 'paragraph', text: 'Teknik Charters dikembangkan oleh W.J. Charters dan memiliki keunikan: bulu sikat diarahkan ke arah mahkota (bukan ke gusi seperti Bass). Ini menjadikan teknik Charters sangat efektif untuk membersihkan ruang interdental (sela antar gigi), embrasure gigi, dan area di sekitar kawat gigi atau jembatan gigi. Teknik ini juga direkomendasikan pasca prosedur bedah periodontal saat gusi masih sensitif.' },
+      { type: 'image',
+        imageUrl: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0b290aGJydXNoJTIwd2hpdGUlMjB0ZWV0aCUyMGNsb3NldXB8ZW58MXx8fHwxNzc2NzczMDM0fDA&ixlib=rb-4.1.0&q=80&w=800',
+        imageAlt: 'Teknik Charters — bulu sikat diarahkan ke mahkota dengan gerakan rotasi-vibrasi',
+        imageCaption: 'Pada Teknik Charters, bulu sikat diarahkan ke mahkota pada sudut 45° — efektif membersihkan embrasure dan sela gigi'
+      },
+      { type: 'subheading', text: 'Langkah-Langkah Teknik Charters:' },
+      { type: 'list', items: [
+        'Posisikan kepala sikat dengan bulu sikat mengarah ke mahkota pada sudut 45° terhadap sumbu panjang gigi',
+        'Tempatkan sisi bulu sikat (bukan ujung) pada permukaan gigi di sekitar sela-sela gigi',
+        'Lakukan gerakan rotasi-vibrasi kecil sehingga bulu sikat masuk ke embrasure (segitiga gusi di antara dua gigi)',
+        'Pertahankan kontak bulu sikat dengan mahkota dan tepi gusi marginal — gerakan jangan terlalu ke arah akar',
+        'Ulangi di setiap area 8–10 kali dengan tumpang-tindih segmen',
+        'Untuk permukaan oklusal (kunyah), gunakan gerakan maju-mundur yang lebih kuat',
+      ]},
+      { type: 'tip', text: 'Teknik Charters sangat direkomendasikan untuk pengguna kawat gigi (orthodontic appliance), jembatan gigi (bridge), dan implan gigi. Bulu sikat yang diarahkan ke mahkota sangat efektif membersihkan area di bawah kawat dan di sekitar braket.' },
+
+      { type: 'heading', text: '4. Teknik Fones (Sirkuler) — Direkomendasikan untuk Anak-Anak' },
+      { type: 'paragraph', text: 'Teknik Fones dikembangkan oleh Alfred Civilion Fones, yang juga dikenal sebagai bapak dental hygiene modern, pada awal abad ke-20. Teknik ini menggunakan gerakan melingkar besar (sirkuler) pada semua permukaan gigi. Kementerian Kesehatan RI secara resmi merekomendasikan teknik Fones untuk anak-anak dalam Pedoman UKGS (Usaha Kesehatan Gigi Sekolah) karena gerakannya sederhana, mudah diajarkan, dan efektif untuk kemampuan motorik anak.' },
+      { type: 'image',
+        imageUrl: 'https://images.unsplash.com/photo-1619642532128-30519b11291a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaGlsZCUyMGJydXNoaW5nJTIwdGVldGh8ZW58MXx8fHwxNzc2NzczMDM0fDA&ixlib=rb-4.1.0&q=80&w=800',
+        imageAlt: 'Anak menyikat gigi dengan teknik Fones — gerakan melingkar besar pada semua permukaan',
+        imageCaption: 'Teknik Fones (sirkuler) — paling mudah diajarkan kepada anak karena gerakannya alami dan intuitif. Direkomendasikan Kemenkes RI untuk anak usia sekolah.'
+      },
+      { type: 'subheading', text: 'Langkah-Langkah Teknik Fones untuk Anak:' },
+      { type: 'list', items: [
+        'Minta anak menutup gigi secara normal (oklusi sentrik) — gigi atas dan bawah bersentuhan',
+        'Tempelkan sikat pada permukaan luar gigi (bukal) dengan bulu sikat tegak lurus terhadap permukaan gigi',
+        'Gerakkan sikat dalam pola melingkar besar (seperti menggambar lingkaran) mencakup gigi atas DAN bawah sekaligus',
+        'Lakukan 10 putaran di setiap segmen: kanan depan, kanan belakang, kiri depan, kiri belakang',
+        'Untuk permukaan dalam (lingual), minta anak membuka mulut dan lakukan gerakan melingkar kecil',
+        'Untuk permukaan kunyah (oklusal), gunakan gerakan maju-mundur',
+        'Durasi total: minimal 2 menit — gunakan timer atau lagu 2 menit agar anak mau bertahan',
+      ]},
+      { type: 'tip', text: 'Menurut panduan UKGS Kemenkes RI, anak usia 6–8 tahun masih perlu dibantu/diawasi orang tua saat menyikat gigi karena koordinasi motorik halus belum sempurna. Baru di usia 8–10 tahun anak dapat mulai menyikat mandiri dengan pengawasan sesekali.' },
+      { type: 'warning', text: 'Teknik Fones (sirkuler) TIDAK direkomendasikan untuk dewasa dengan penyakit periodontal aktif. Untuk orang dewasa, beralihkan ke teknik Modified Bass yang lebih efektif membersihkan sulkus gingiva. Teknik Fones pada dewasa berisiko melewatkan plak subgingival.' },
+
+      { type: 'heading', text: 'Panduan Memilih Teknik yang Tepat' },
+      { type: 'table', rows: [
+        { label: 'Anak ≤ 12 tahun', value: 'Teknik Fones (Sirkuler) — sederhana, mudah dipelajari, efektif untuk gigi susu dan mixed dentition' },
+        { label: 'Remaja & Dewasa sehat', value: 'Teknik Modified Bass — standar emas, membersihkan sulkus gingiva secara optimal' },
+        { label: 'Gusi sensitif / resesi', value: 'Teknik Stillman Modifikasi — gerakan pijatan lembut merangsang sirkulasi gusi' },
+        { label: 'Pengguna kawat gigi / bridge', value: 'Teknik Charters — bulu sikat masuk ke embrasure dan di bawah kawat' },
+        { label: 'Pasca bedah periodontal', value: 'Teknik Charters atau Stillman — minimal trauma pada jaringan yang sedang pulih' },
+        { label: 'Ibu hamil (gusi sensitif)', value: 'Teknik Stillman Modifikasi dengan sikat berbulu sangat lembut (ultra-soft)' },
+      ]},
+
+      { type: 'heading', text: 'Kesalahan Umum Menyikat Gigi yang Harus Dihindari' },
+      { type: 'list', items: [
+        'Menyikat terlalu keras (tekanan berlebih) — abrasi email dan resesi gusi jangka panjang',
+        'Hanya menyikat permukaan luar — permukaan dalam (lingual/palatal) adalah area paling sering terlewat',
+        'Menyikat terlalu cepat (< 2 menit) — plak tidak tersapu secara menyeluruh',
+        'Tidak menyikat area gigi paling belakang (molar terakhir)',
+        'Tidak membersihkan lidah — sumber utama bakteri penghasil bau mulut (VSC)',
+        'Langsung berkumur setelah menyikat — bilas dengan sedikit air dan jangan terlalu banyak membilas agar fluoride pasta gigi tetap bekerja',
+        'Menggunakan sikat lama (> 3 bulan) — bulu sikat rusak tidak efektif membersihkan plak',
+      ]},
+
+      { type: 'heading', text: 'Rekomendasi Sikat Gigi Berdasarkan Bukti Ilmiah' },
+      { type: 'list', items: [
+        'Kekerasan bulu: Selalu pilih SOFT (lembut) — medium dan hard meningkatkan risiko abrasi (van der Weijden & Slot, 2011)',
+        'Ukuran kepala sikat: Kecil hingga sedang — lebih mudah menjangkau molar belakang',
+        'Manual vs elektrik: Sikat elektrik dengan gerakan osilasi-rotasi terbukti lebih efektif mengurangi plak (Cochrane Review, Deacon et al., 2010)',
+        'Ganti sikat: Setiap 3 bulan atau saat bulu sikat mulai mekar — bulu rusak efektivitasnya turun 50%',
+        'Pasta gigi berfluoride: Wajib — kandungan fluoride 1.000–1.500 ppm untuk dewasa, 500–1.000 ppm untuk anak',
+      ]},
+
+      { type: 'sources', items: [
+        'Bass, C.C. (1954). An effective method of personal oral hygiene. Journal of the Louisiana State Medical Society, 106(2), 57–73.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Usaha Kesehatan Gigi Sekolah (UKGS). Jakarta: Direktorat Bina Gigi dan Kesehatan Jiwa, Kemenkes RI.',
+        'Kementerian Kesehatan RI. (2012). Pedoman Pemeliharaan Kesehatan Gigi dan Mulut Ibu Hamil dan Anak Usia Balita bagi Tenaga Kesehatan. Jakarta: Kemenkes RI.',
+        'Wilkins, E.M. (2017). Clinical Practice of the Dental Hygienist (12th ed.). Lippincott Williams & Wilkins. Ch. 24: Toothbrushing.',
+        'van der Weijden, G.A., & Slot, D.E. (2011). Oral hygiene in the prevention of periodontal diseases: The evidence. Periodontology 2000, 55(1), 104–123.',
+        'Sangnes, G., & Gjermo, P. (1976). Prevalence of oral soft and hard tissue lesions related to mechanical toothcleansing procedures. Community Dentistry and Oral Epidemiology, 4(2), 77–83.',
+        'Deacon, S.A. et al. (2010). Different powered toothbrushes for plaque control and gingival health. Cochrane Database of Systematic Reviews, (12):CD004971.',
+        'Fones, A.C. (1934). Mouth Hygiene (4th ed.). Lea & Febiger. Philadelphia.',
+        'Claydon, N.C. (2008). Current concepts in toothbrushing and interdental cleaning. Periodontology 2000, 48(1), 10–22.',
       ]},
     ],
   },

@@ -10,7 +10,6 @@ import { Footer } from '../components/Footer';
 import { CourseCard } from '../components/CourseCard';
 import { WHOStandards } from '../components/WHOStandards';
 import { ParentHub } from '../components/ParentHub';
-import { VisitorModal } from '../components/VisitorModal';
 import { articles } from '../data/articles';
 import { Gamepad2, HelpCircle, MessageSquare, ChevronRight, ClipboardList } from 'lucide-react';
 
@@ -60,7 +59,6 @@ const interactiveFeatures = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      <VisitorModal />
       <Header />
       <Hero />
       <About />

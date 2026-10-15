@@ -108,6 +108,24 @@ function SectionBlock({ section }: { section: ArticleSection }) {
           </ol>
         </div>
       );
+    case 'image':
+      return (
+        <figure className="my-6">
+          <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50">
+            <img
+              src={section.imageUrl}
+              alt={section.imageAlt || ''}
+              className="w-full object-cover"
+              style={{ maxHeight: '360px' }}
+            />
+          </div>
+          {section.imageCaption && (
+            <figcaption className="text-center text-xs text-gray-400 mt-2 italic px-4">
+              {section.imageCaption}
+            </figcaption>
+          )}
+        </figure>
+      );
     default:
       return null;
   }
