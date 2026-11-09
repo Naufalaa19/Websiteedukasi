@@ -23,12 +23,12 @@ app.use(
 );
 
 // Health check endpoint
-app.get("/make-server-be29dd90/health", (c) => {
+app.get("/health", (c) => {
   return c.json({ status: "ok" });
 });
 
 // POST /visitors — Save a new visitor entry
-app.post("/make-server-be29dd90/visitors", async (c) => {
+app.post("/visitors", async (c) => {
   try {
     const body = await c.req.json();
     const { name, institution, city, email } = body;
@@ -59,7 +59,7 @@ app.post("/make-server-be29dd90/visitors", async (c) => {
 });
 
 // GET /visitors — Get all visitors (requires admin password)
-app.get("/make-server-be29dd90/visitors", async (c) => {
+app.get("/visitors", async (c) => {
   try {
     const password = c.req.query("password");
     if (password !== ADMIN_PASSWORD) {
@@ -86,7 +86,7 @@ app.get("/make-server-be29dd90/visitors", async (c) => {
 // ─── KOMENTAR ROUTES ─────────────────────────────────────────────────────────
 
 // GET /comments — fetch all comments
-app.get("/make-server-be29dd90/comments", async (c) => {
+app.get("/comments", async (c) => {
   try {
     const records = await kv.getByPrefix("comment:");
     const comments = records
@@ -103,7 +103,7 @@ app.get("/make-server-be29dd90/comments", async (c) => {
 });
 
 // POST /comments — add a new comment
-app.post("/make-server-be29dd90/comments", async (c) => {
+app.post("/comments", async (c) => {
   try {
     const body = await c.req.json();
     const { name, message, category, avatar } = body;
@@ -131,7 +131,7 @@ app.post("/make-server-be29dd90/comments", async (c) => {
 });
 
 // POST /comments/like — increment/decrement like count
-app.post("/make-server-be29dd90/comments/like", async (c) => {
+app.post("/comments/like", async (c) => {
   try {
     const body = await c.req.json();
     const { commentId, delta } = body; // delta: +1 or -1
@@ -155,7 +155,7 @@ app.post("/make-server-be29dd90/comments/like", async (c) => {
 });
 
 // POST /comments/reply — add reply to a comment
-app.post("/make-server-be29dd90/comments/reply", async (c) => {
+app.post("/comments/reply", async (c) => {
   try {
     const body = await c.req.json();
     const { commentId, name, message } = body;
@@ -188,7 +188,7 @@ app.post("/make-server-be29dd90/comments/reply", async (c) => {
 });
 
 // DELETE /comments/:id — delete a comment
-app.delete("/make-server-be29dd90/comments/:id", async (c) => {
+app.delete("/comments/:id", async (c) => {
   try {
     const commentId = c.req.param("id");
     const records = await kv.getByPrefix("comment:");
@@ -239,7 +239,7 @@ async function userFromRequest(c: any) {
 }
 
 // POST /auth/register
-app.post("/make-server-be29dd90/auth/register", async (c) => {
+app.post("/auth/register", async (c) => {
   try {
     const { name, email, password, institution, city } = await c.req.json();
     const mail = String(email || "").trim().toLowerCase();
@@ -265,7 +265,7 @@ app.post("/make-server-be29dd90/auth/register", async (c) => {
 });
 
 // POST /auth/login
-app.post("/make-server-be29dd90/auth/login", async (c) => {
+app.post("/auth/login", async (c) => {
   try {
     const { email, password } = await c.req.json();
     const mail = String(email || "").trim().toLowerCase();
@@ -283,21 +283,21 @@ app.post("/make-server-be29dd90/auth/login", async (c) => {
 });
 
 // GET /auth/me
-app.get("/make-server-be29dd90/auth/me", async (c) => {
+app.get("/auth/me", async (c) => {
   const user = await userFromRequest(c);
   if (!user) return c.json({ error: "Sesi berakhir." }, 401);
   return c.json({ success: true, user: publicUser(user) });
 });
 
 // POST /auth/logout
-app.post("/make-server-be29dd90/auth/logout", async (c) => {
+app.post("/auth/logout", async (c) => {
   const token = c.req.header("X-User-Token");
   if (token) await kv.del(`session:${token}`);
   return c.json({ success: true });
 });
 
 // POST /results — simpan nilai pretest / posttest
-app.post("/make-server-be29dd90/results", async (c) => {
+app.post("/results", async (c) => {
   try {
     const user = await userFromRequest(c);
     if (!user) return c.json({ error: "Silakan masuk terlebih dahulu." }, 401);
@@ -317,7 +317,7 @@ app.post("/make-server-be29dd90/results", async (c) => {
 });
 
 // GET /results/me — nilai milik pengguna yang login
-app.get("/make-server-be29dd90/results/me", async (c) => {
+app.get("/results/me", async (c) => {
   try {
     const user = await userFromRequest(c);
     if (!user) return c.json({ error: "Sesi berakhir." }, 401);
@@ -330,7 +330,7 @@ app.get("/make-server-be29dd90/results/me", async (c) => {
 });
 
 // GET /admin/report — rekap responden (butuh password admin)
-app.get("/make-server-be29dd90/admin/report", async (c) => {
+app.get("/admin/report", async (c) => {
   try {
     if (c.req.query("password") !== ADMIN_PASSWORD) return c.json({ error: "Password admin salah." }, 401);
     const users = (await kv.getByPrefix("user:")).map(parse).filter((u: any) => u && u.email);
