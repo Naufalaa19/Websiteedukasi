@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Menu, X, Gamepad2, HelpCircle, MessageSquare, Timer, ClipboardList } from 'lucide-react';
+import { Menu, X, Gamepad2, HelpCircle, MessageSquare, Timer, ClipboardList, LogOut } from 'lucide-react';
+import { useAuth } from '../lib/auth';
 import { Link, useLocation } from 'react-router';
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
   const isHome = location.pathname === '/';
 
   const homeHref = (hash: string) => isHome ? hash : `/${hash}`;
@@ -17,7 +19,7 @@ export function Header() {
     { label: 'Games', href: '/games', isRoute: true, icon: Gamepad2 },
     { label: 'Timer', href: '/tools/timer', isRoute: true, icon: Timer },
     { label: 'Quiz', href: '/quiz', isRoute: true, icon: HelpCircle },
-    { label: 'Evaluasi', href: '/evaluasi', isRoute: true, icon: ClipboardList },
+    { label: 'Posttest', href: '/evaluasi', isRoute: true, icon: ClipboardList },
     { label: 'Komentar', href: '/komentar', isRoute: true, icon: MessageSquare },
   ];
 
@@ -70,6 +72,13 @@ export function Header() {
 
           {/* CTA Button */}
           <div className="hidden lg:flex items-center gap-3">
+            {user && (
+              <div className="flex items-center gap-2 bg-teal-50 border border-teal-100 rounded-full pl-1.5 pr-1 py-1">
+                <span className="w-7 h-7 rounded-full bg-teal-600 text-white text-xs font-bold flex items-center justify-center">{user.name.charAt(0).toUpperCase()}</span>
+                <span className="text-xs font-semibold text-teal-800 max-w-[7rem] truncate">{user.name}</span>
+                <button onClick={logout} title="Keluar" aria-label="Keluar" className="w-7 h-7 rounded-full text-teal-700 hover:bg-white flex items-center justify-center"><LogOut size={14} /></button>
+              </div>
+            )}
             <a
               href={homeHref('#kontak')}
               className="bg-teal-600 text-white px-5 py-2 rounded-full text-sm hover:bg-teal-700 transition-colors"
@@ -117,6 +126,11 @@ export function Header() {
                   {link.label}
                 </a>
               )
+            )}
+            {user && (
+              <button onClick={logout} className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-md text-sm text-teal-800 bg-teal-50">
+                <span className="truncate">Masuk sebagai <b>{user.name}</b></span><span className="flex items-center gap-1 shrink-0"><LogOut size={14} />Keluar</span>
+              </button>
             )}
             <a
               href={homeHref('#kontak')}

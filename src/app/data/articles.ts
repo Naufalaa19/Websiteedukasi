@@ -1,3 +1,4 @@
+import { enrichArticles } from './clinicalImages';
 export interface Article {
   id: string;
   title: string;
@@ -29,7 +30,7 @@ export interface ArticleSection {
   imageCaption?: string;
 }
 
-export const articles: Article[] = [
+const baseArticles: Article[] = [
   {
     id: 'karang-gigi',
     title: 'Mengenal Karang Gigi: Penyebab dan Proses Terbentuknya',
@@ -1065,3 +1066,5 @@ export const articles: Article[] = [
     ],
   },
 ];
+
+export const articles: Article[] = enrichArticles(baseArticles);
