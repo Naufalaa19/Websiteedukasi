@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
 import { Users, Lock, Search, Download, RefreshCw, Shield, LogOut, ClipboardCheck, LogIn, TrendingUp, UserCheck } from 'lucide-react';
-import { api } from '../lib/auth';
+import { supabase } from '../lib/supabaseClient';
 
 interface Score { score: number; total: number; at: string }
 interface Row {
@@ -9,7 +9,7 @@ interface Row {
   registeredAt: string; loginCount: number; lastLogin: string | null;
   pretest: Score | null; posttest: Score | null; posttestAttempts: number;
 }
-interface LoginEntry { name: string; email: string; at: string; isRegister?: boolean }
+interface LoginEntry { name: string; email: string; at: string; provider?: string; isRegister?: boolean }
 
 const fmt = (iso?: string | null) =>
   iso ? new Date(iso).toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
@@ -30,7 +30,9 @@ export default function AdminVisitors() {
     setLoading(true);
     setError('');
     try {
-      const d = await api<{ rows: Row[]; loginLog: LoginEntry[] }>(`/admin/report?password=${encodeURIComponent(pw)}`);
+      const { data, error: err } = await supabase.rpc('admin_report', { p_password: pw });
+      if (err) throw new Error(/Password admin salah/.test(err.message) ? 'Password admin salah.' : /admin_report|schema cache/.test(err.message) ? 'Fungsi admin_report belum dibuat. Jalankan supabase/schema.sql di SQL Editor.' : err.message);
+      const d = data as { rows: Row[]; loginLog: LoginEntry[] };
       setRows(d.rows || []);
       setLog(d.loginLog || []);
       setAuthed(true);
@@ -203,7 +205,7 @@ export default function AdminVisitors() {
                     <td className="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">{fmt(l.at)}</td>
                     <td className="px-4 py-3 font-medium text-gray-800">{l.name}</td>
                     <td className="px-4 py-3 text-xs text-gray-500">{l.email}</td>
-                    <td className="px-4 py-3"><span className={`text-xs px-2 py-1 rounded-full ${l.isRegister ? 'bg-amber-50 text-amber-700' : 'bg-teal-50 text-teal-700'}`}>{l.isRegister ? 'Mendaftar' : 'Masuk'}</span></td>
+                    <td className="px-4 py-3"><span className={`text-xs px-2 py-1 rounded-full ${l.isRegister ? 'bg-amber-50 text-amber-700' : 'bg-teal-50 text-teal-700'}`}>{l.isRegister ? 'Mendaftar' : 'Masuk'}{l.provider === 'google' ? ' · Google' : ''}</span></td>
                   </tr>
                 ))}
                 {log.length === 0 && <tr><td colSpan={4} className="text-center py-14 text-gray-400">Belum ada aktivitas login.</td></tr>}

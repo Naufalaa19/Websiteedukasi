@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { Heart, Plus, Send, X, MessageCircle, Trash2, RefreshCw, Loader2, Wifi, WifiOff } from 'lucide-react';
-import { projectId, publicAnonKey } from '/utils/supabase/info';
-
-const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-be29dd90`;
+import { supabase } from '../lib/supabaseClient';
 const LIKED_KEY = 'karanggigi_liked_comments';
 const LIKES_STORAGE_KEY = 'karanggigi_comment_likes';
 
@@ -85,16 +83,10 @@ function saveLikeOverrides(obj: Record<string, number>) {
   localStorage.setItem(LIKES_STORAGE_KEY, JSON.stringify(obj));
 }
 
-function apiFetch(path: string, opts?: RequestInit) {
-  return fetch(`${API_BASE}${path}`, {
-    ...opts,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${publicAnonKey}`,
-      ...(opts?.headers || {}),
-    },
-  });
-}
+const toComment = (r: any): Comment => ({
+  id: r.id, name: r.name, avatar: r.avatar || '😊', message: r.message, category: r.category || 'Pengalaman',
+  likes: r.likes || 0, replies: r.replies || [], createdAt: r.created_at,
+});
 
 export default function Komentar() {
   const [comments, setComments] = useState<Comment[]>([]);
@@ -116,10 +108,9 @@ export default function Komentar() {
 
   const fetchComments = async () => {
     try {
-      const res = await apiFetch('/comments');
-      if (!res.ok) throw new Error('Server error');
-      const data = await res.json();
-      setComments(data.comments || []);
+      const { data, error } = await supabase.from('comments').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      setComments((data || []).map(toComment));
       setOnline(true);
     } catch {
       setOnline(false);
@@ -143,13 +134,11 @@ export default function Komentar() {
     setSubmitting(true);
     setFormError('');
     try {
-      const res = await apiFetch('/comments', {
-        method: 'POST',
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Gagal memposting.');
-      setComments(prev => [data.comment, ...prev]);
+      const { data, error } = await supabase.from('comments').insert({
+        name: form.name.trim(), message: form.message.trim(), category: form.category, avatar: form.avatar,
+      }).select().single();
+      if (error) throw new Error(/schema cache|does not exist/.test(error.message) ? 'Tabel komentar belum dibuat. Jalankan supabase/schema.sql.' : error.message);
+      setComments(prev => [toComment(data), ...prev]);
       setForm({ name: '', message: '', category: 'Pengalaman', avatar: '😊' });
       setShowForm(false);
     } catch (err: unknown) {
@@ -175,10 +164,8 @@ export default function Komentar() {
     saveLikeOverrides(newOverrides);
 
     try {
-      await apiFetch('/comments/like', {
-        method: 'POST',
-        body: JSON.stringify({ commentId: comment.id, delta }),
-      });
+      const { error } = await supabase.rpc('like_comment', { p_id: comment.id, p_delta: delta });
+      if (error) throw error;
     } catch {
       // Revert on error
       const reverted = new Set(liked);
@@ -194,15 +181,11 @@ export default function Komentar() {
     if (!replyName.trim() || !replyMessage.trim()) return;
     setSendingReply(true);
     try {
-      const res = await apiFetch('/comments/reply', {
-        method: 'POST',
-        body: JSON.stringify({ commentId, name: replyName, message: replyMessage }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      const { data: reply, error } = await supabase.rpc('reply_comment', { p_id: commentId, p_name: replyName, p_message: replyMessage });
+      if (error) throw error;
       setComments(prev => prev.map(c =>
         c.id === commentId
-          ? { ...c, replies: [...(c.replies || []), data.reply] }
+          ? { ...c, replies: [...(c.replies || []), reply as Reply] }
           : c
       ));
       setReplyingTo(null);
@@ -217,10 +200,14 @@ export default function Komentar() {
 
   const handleDelete = async (comment: Comment) => {
     if (!window.confirm(`Hapus komentar dari "${comment.name}"?`)) return;
-    setComments(prev => prev.filter(c => c.id !== comment.id));
+    const pw = window.prompt('Masukkan password admin untuk menghapus komentar:');
+    if (!pw) return;
     try {
-      await apiFetch(`/comments/${comment.id}`, { method: 'DELETE' });
+      const { error } = await supabase.rpc('delete_comment', { p_id: comment.id, p_password: pw });
+      if (error) throw error;
+      setComments(prev => prev.filter(c => c.id !== comment.id));
     } catch {
+      window.alert('Gagal menghapus: password admin salah.');
       // Re-fetch to restore if delete failed
       fetchComments();
     }

@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { Link } from 'react-router';
 import { Check, X, ArrowLeft, ArrowRight, Star, Flame, Trophy, RotateCcw, CloudOff, Home, CheckCircle2, XCircle } from 'lucide-react';
 import { questions, answerKey, getCategory } from '../data/evaluasiQuestions';
-import { api, useAuth } from '../lib/auth';
+import { useAuth } from '../lib/auth';
 
 type Mode = 'pretest' | 'posttest';
 type Ans = Record<number, 'B' | 'S'>;
@@ -35,7 +35,7 @@ const cfg = {
 };
 
 export function MissionTest({ mode }: { mode: Mode }) {
-  const { user, token, results, markResult, hasPretest } = useAuth();
+  const { user, results, saveResult, hasPretest } = useAuth();
   const [phase, setPhase] = useState<'intro' | 'play' | 'stage' | 'saving' | 'done'>('intro');
   const [idx, setIdx] = useState(0);
   const [answers, setAnswers] = useState<Ans>({});
@@ -59,8 +59,7 @@ export function MissionTest({ mode }: { mode: Mode }) {
     setPhase('saving');
     setSaveErr('');
     try {
-      await api('/results', { method: 'POST', token, body: { type: mode, score, total: 40, answers: a } });
-      markResult({ type: mode, score, total: 40, at: new Date().toISOString() });
+      await saveResult(mode, score, a);
       setPhase('done');
     } catch (e: any) {
       setSaveErr(e.message || 'Gagal menyimpan nilai.');

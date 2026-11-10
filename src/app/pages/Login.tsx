@@ -18,7 +18,8 @@ function Field({ icon: Icon, ...props }: { icon: typeof Mail } & React.InputHTML
 }
 
 export default function Login() {
-  const { login, register } = useAuth();
+  const { login, register, loginGoogle } = useAuth();
+  const [info, setInfo] = useState('');
   const [mode, setMode] = useState<'masuk' | 'daftar'>('daftar');
   const [f, setF] = useState({ name: '', email: '', password: '', institution: '', city: '' });
   const [show, setShow] = useState(false);
@@ -34,9 +35,13 @@ export default function Login() {
     e.preventDefault();
     setBusy(true);
     setErr('');
+    setInfo('');
     try {
       if (mode === 'masuk') await login(f.email, f.password);
-      else await register(f);
+      else {
+        const r = await register(f);
+        if (r.needsConfirm) { setInfo('Pendaftaran berhasil! Cek email Anda dan klik tautan konfirmasi, lalu masuk.'); setMode('masuk'); }
+      }
     } catch (x: any) {
       setErr(x.message || 'Terjadi kesalahan.');
     } finally {
@@ -111,6 +116,16 @@ export default function Login() {
             ))}
           </div>
 
+          <button
+            type="button"
+            onClick={async () => { setErr(''); try { await loginGoogle(); } catch (x: any) { setErr(x.message); } }}
+            className="w-full mb-4 py-3.5 rounded-2xl bg-white border-2 border-teal-100 hover:border-teal-300 text-gray-700 font-bold text-[15px] flex items-center justify-center gap-3 transition"
+          >
+            <svg viewBox="0 0 48 48" className="w-5 h-5" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.600-5.900c-2.100 1.400-4.900 2.300-8.300 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>
+            Lanjutkan dengan Google
+          </button>
+          <div className="flex items-center gap-3 mb-4 text-xs text-gray-400"><span className="flex-1 h-px bg-teal-100" />atau pakai email<span className="flex-1 h-px bg-teal-100" /></div>
+
           <form onSubmit={submit} className="space-y-3.5">
             {mode === 'daftar' && (
               <Field icon={User} required placeholder="Nama lengkap" value={f.name} onChange={set('name')} autoComplete="name" />
@@ -129,6 +144,7 @@ export default function Login() {
               </div>
             )}
 
+            {info && <p role="status" className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-xl px-4 py-2.5">{info}</p>}
             {err && <p role="alert" className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-2.5">{err}</p>}
 
             <button
