@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Lock, User, Building2, MapPin, Eye, EyeOff, ArrowRight, ShieldCheck, Sparkles, ClipboardCheck } from 'lucide-react';
 import { useAuth } from '../lib/auth';
+import { supabase, isConfigured } from '../lib/supabaseClient';
 
 const HERO = 'https://commons.wikimedia.org/wiki/Special:FilePath/Dentist_in_Mexico_attending_a_child.jpg?width=1200';
 
@@ -19,6 +20,14 @@ function Field({ icon: Icon, ...props }: { icon: typeof Mail } & React.InputHTML
 
 export default function Login() {
   const { login, register, loginGoogle } = useAuth();
+  const [dbMissing, setDbMissing] = useState(false);
+
+  useEffect(() => {
+    if (!isConfigured) return;
+    supabase.from('profiles').select('id').limit(1).then(({ error }) => {
+      if (error && /schema cache|does not exist/.test(error.message)) setDbMissing(true);
+    });
+  }, []);
   const [info, setInfo] = useState('');
   const [mode, setMode] = useState<'masuk' | 'daftar'>('daftar');
   const [f, setF] = useState({ name: '', email: '', password: '', institution: '', city: '' });
@@ -91,6 +100,11 @@ export default function Login() {
       {/* Form */}
       <div className="flex items-center justify-center px-5 py-10 sm:px-10">
         <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-md">
+          {dbMissing && (
+            <div role="alert" className="mb-5 text-xs leading-relaxed text-amber-800 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3">
+              <strong>Database belum disiapkan.</strong> Pemilik situs: jalankan isi <code>supabase/schema.sql</code> di Supabase → SQL Editor. Sebelum itu, akun dan nilai belum bisa tersimpan.
+            </div>
+          )}
           <div className="lg:hidden flex items-center gap-2 mb-6">
             <span className="w-10 h-10 rounded-2xl bg-teal-600 flex items-center justify-center text-xl">🦷</span>
             <span className="font-display text-xl text-teal-800">KarangGigiEdu</span>

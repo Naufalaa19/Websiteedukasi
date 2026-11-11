@@ -42,6 +42,7 @@ export function MissionTest({ mode }: { mode: Mode }) {
   const [picked, setPicked] = useState<'B' | 'S' | null>(null);
   const [saveErr, setSaveErr] = useState('');
   const [final, setFinal] = useState(0);
+  const [synced, setSynced] = useState(true);
   const lock = useRef(false);
 
   const c = cfg[mode];
@@ -59,7 +60,8 @@ export function MissionTest({ mode }: { mode: Mode }) {
     setPhase('saving');
     setSaveErr('');
     try {
-      await saveResult(mode, score, a);
+      const r = await saveResult(mode, score, a);
+      setSynced(r.synced);
       setPhase('done');
     } catch (e: any) {
       setSaveErr(e.message || 'Gagal menyimpan nilai.');
@@ -213,7 +215,7 @@ export function MissionTest({ mode }: { mode: Mode }) {
             )}
 
             <p className="text-sm text-gray-500 bg-teal-50 rounded-2xl p-3.5 mb-6">
-              ✅ Nilai tersimpan atas nama <strong>{user?.name}</strong>.
+              {synced ? '✅ Nilai tersimpan' : '⏳ Nilai disimpan sementara di perangkat ini dan akan dikirim otomatis ke server'} atas nama <strong>{user?.name}</strong>.
               {mode === 'pretest' ? ' Sekarang pelajari materi, lalu kerjakan Posttest di menu "Posttest".' : ''}
             </p>
 

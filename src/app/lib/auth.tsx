@@ -14,7 +14,7 @@ interface Ctx {
   register: (f: { name: string; email: string; password: string; institution?: string; city?: string }) => Promise<{ needsConfirm: boolean }>;
   loginGoogle: () => Promise<void>;
   logout: () => Promise<void>;
-  saveResult: (type: 'pretest' | 'posttest', score: number, answers: unknown) => Promise<void>;
+  saveResult: (type: 'pretest' | 'posttest', score: number, answers: unknown) => Promise<{ synced: boolean }>;
 }
 
 const AuthContext = createContext<Ctx | null>(null);
@@ -41,6 +41,10 @@ const friendly = (msg: string) => {
   return msg;
 };
 
+const PENDING_KEY = 'kge_pending_results';
+const readPending = (): any[] => { try { return JSON.parse(localStorage.getItem(PENDING_KEY) || '[]'); } catch { return []; } };
+const writePending = (x: any[]) => localStorage.setItem(PENDING_KEY, JSON.stringify(x));
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [results, setResults] = useState<ResultRow[]>([]);
@@ -59,6 +63,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     sessionStorage.setItem(key, '1');
     await supabase.from('login_events').insert({ user_id: u.id, name: u.name, email: u.email, provider, is_register: isRegister });
   }, []);
+
+  // Kirim ulang nilai yang sempat gagal tersimpan (mis. koneksi putus / tabel belum siap)
+  const flushPending = useCallback(async (uid: string) => {
+    const all = readPending();
+    const mine = all.filter((r) => r.user_id === uid);
+    if (!mine.length) return;
+    const rest = all.filter((r) => r.user_id !== uid);
+    const failed: any[] = [];
+    for (const r of mine) {
+      const { error } = await supabase.from('results').insert(r);
+      if (error) failed.push(r);
+    }
+    writePending([...rest, ...failed]);
+    if (failed.length < mine.length) await loadResults(uid);
+  }, [loadResults]);
+
+  useEffect(() => {
+    if (!user) return;
+    flushPending(user.id);
+    const t = setInterval(() => flushPending(user.id), 20000);
+    return () => clearInterval(t);
+  }, [user, flushPending]);
 
   useEffect(() => {
     if (!isConfigured) { setReady(true); return; }
@@ -109,11 +135,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
     loginGoogle: async () => {
       guard();
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: window.location.origin + '/login' },
+        options: { redirectTo: window.location.origin + '/login', skipBrowserRedirect: true, queryParams: { prompt: 'select_account' } },
       });
       if (error) throw new Error(friendly(error.message));
+      if (!data?.url) throw new Error('Gagal memulai login Google.');
+      // Google menolak dibuka di dalam iframe (preview), jadi pakai jendela popup.
+      const w = 500, h = 640;
+      const pop = window.open(data.url, 'google-login', `width=${w},height=${h},left=${Math.max(0, (window.screen.width - w) / 2)},top=${Math.max(0, (window.screen.height - h) / 2)}`);
+      if (!pop) {
+        // popup diblokir: buka di jendela utama (atau jendela paling atas)
+        try { (window.top || window).location.href = data.url; } catch { window.location.href = data.url; }
+      }
     },
     logout: async () => {
       await supabase.auth.signOut();
@@ -122,15 +156,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setResults([]);
     },
     saveResult: async (type, score, answers) => {
-      guard();
       if (!user) throw new Error('Silakan masuk terlebih dahulu.');
-      const { error } = await supabase.from('results').insert({ user_id: user.id, name: user.name, email: user.email, type, score, total: 40, answers });
-      if (error) {
-        if (/relation .* does not exist|schema cache/i.test(error.message)) throw new Error('Tabel belum dibuat. Jalankan supabase/schema.sql di SQL Editor Supabase.');
-        throw new Error(friendly(error.message));
+      const row = { user_id: user.id, name: user.name, email: user.email, type, score, total: 40, answers, at: new Date().toISOString() };
+      let synced = true;
+      try {
+        if (!isConfigured) throw new Error('not configured');
+        const { error } = await supabase.from('results').insert(row);
+        if (error) throw error;
+      } catch (e) {
+        // jangan hilangkan data responden: simpan di perangkat lalu kirim otomatis nanti
+        synced = false;
+        writePending([...readPending(), row]);
+        console.warn('Nilai disimpan sementara di perangkat:', e);
       }
       if (type === 'pretest') localStorage.setItem(`kge_pre_${user.id}`, '1');
-      setResults((p) => [...p, { type, score, total: 40, at: new Date().toISOString() }]);
+      setResults((p) => [...p, { type, score, total: 40, at: row.at }]);
+      return { synced };
     },
   };
 
